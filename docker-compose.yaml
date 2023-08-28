@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres
+    volumes:
+      - db:/data/db
+      - ./database/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - ./database/insert_tables.sql:/docker-entrypoint-initdb.d/insert_tables.sql
+    env_file:
+      - .env
+    ports:
+      - $POSTGRES_LOCAL_PORT:$POSTGRES_DOCKER_PORT
+
+volumes:
+  ignore:
+  db:

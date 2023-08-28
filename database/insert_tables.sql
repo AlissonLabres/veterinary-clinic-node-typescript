@@ -1,0 +1,1 @@
+INSERT INTO bullet(code) values ('2023-08-08T16:00');
