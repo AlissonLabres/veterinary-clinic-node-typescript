@@ -2,9 +2,9 @@ DROP TABLE IF EXISTS schedule, bullet CASCADE;
 
 CREATE TABLE IF NOT EXISTS bullet (
     bullet_id SERIAL primary key,
-    code varchar(255) not null,
+    bullet_code varchar(255) not null,
     schedule_id integer
-)
+);
 
 CREATE TABLE IF NOT EXISTS schedule (
     schedule_id SERIAL primary key,

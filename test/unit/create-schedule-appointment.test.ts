@@ -1,7 +1,6 @@
-import TimeOrDateException from "../../src/domain/exception/time-or-date-exception";
-import CreateScheduleAppointment from "../../src/domain/usecase/create-schedule-appointment"
-import ScheduleAppointmentInput from "../../src/domain/usecase/schedule-appointment-input";
-import ScheduleAppointmentOutput from "../../src/domain/usecase/schedule-appointment-output";
+import CreateScheduleAppointment from "../../src/domain/usecase/create-schedule-appointment/create-schedule-appointment"
+import ScheduleAppointmentInput from "../../src/domain/usecase/create-schedule-appointment/schedule-appointment-input";
+import ScheduleAppointmentOutput from "../../src/domain/usecase/create-schedule-appointment/schedule-appointment-output";
 import ScheduleRepositoryMemory from "../../src/infrastructure/repository/ScheduleRepositoryMemory"
 
 test('Should create usecase schedule appointment', async () => {
