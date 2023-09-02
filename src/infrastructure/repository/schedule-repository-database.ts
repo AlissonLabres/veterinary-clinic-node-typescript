@@ -1,7 +1,7 @@
 import Bullet from "../../domain/entity/bullet";
 import Schedule from "../../domain/entity/schedule";
 import ScheduleRepository from "../../domain/repository/schedule-repository";
-import DatabaseConnection from "../database/DatabaseConnection";
+import DatabaseConnection from "./database/database-connection";
 
 export default class ScheduleRepositoryDatabase implements ScheduleRepository {
   constructor(private readonly databaseConnection: DatabaseConnection) { }

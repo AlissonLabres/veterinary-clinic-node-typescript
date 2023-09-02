@@ -1,7 +1,7 @@
 import CreateScheduleAppointment from "../../src/domain/usecase/create-schedule-appointment/create-schedule-appointment"
 import ScheduleAppointmentInput from "../../src/domain/usecase/create-schedule-appointment/schedule-appointment-input";
 import ScheduleAppointmentOutput from "../../src/domain/usecase/create-schedule-appointment/schedule-appointment-output";
-import ScheduleRepositoryMemory from "../../src/infrastructure/repository/ScheduleRepositoryMemory"
+import ScheduleRepositoryMemory from "../../src/infrastructure/repository/schedule-repository-memory"
 
 test('Should create usecase schedule appointment', async () => {
   const repository = new ScheduleRepositoryMemory();

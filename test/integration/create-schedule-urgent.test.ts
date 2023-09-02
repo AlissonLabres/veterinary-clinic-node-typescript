@@ -5,7 +5,7 @@ test("Should create schedule", async () => {
     user_id: 1,
     medical_id: 1,
     animal_id: 1,
-    urgency_date: '2023-09-08T16:00'
+    urgency_date: '2023-09-06T16:00'
   };
 
   const response = await axios.post("http://localhost:3000/schedule/urgent", input);

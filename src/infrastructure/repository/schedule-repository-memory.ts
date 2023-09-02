@@ -16,6 +16,9 @@ export default class ScheduleRepositoryMemory implements ScheduleRepository {
   }[] = [];
 
   constructor() {
+    this.schedules = [];
+    this.bullets = [];
+
     this.bullets.push(
       { bullet_code: '2023-08-08T16:00', bullet_id: 1 },
       { bullet_code: '2023-09-08T16:00', bullet_id: 2 },

@@ -8,9 +8,9 @@ test("Should cancel schedule", async () => {
     bullet_code: '2023-09-03T16:00'
   };
 
-  await axios.post("http://localhost:3000/schedule/appointment", create);
+  const { data } = await axios.post("http://localhost:3000/schedule/appointment", create);
 
-  const input = { schedule_id: 1 };
+  const input = { schedule_id: data.schedule_id };
   const response = await axios.post("http://localhost:3000/schedule/appointment/cancel", input);
   
   expect(response.status).toEqual(204)

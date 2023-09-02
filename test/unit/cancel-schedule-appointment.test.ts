@@ -2,7 +2,7 @@ import Schedule from "../../src/domain/entity/schedule";
 import ScheduleException from "../../src/domain/exception/schedule-exception";
 import CancelScheduleAppointment from "../../src/domain/usecase/cancel-schedule-appointment/cancel-schedule-appoitment";
 
-import ScheduleRepositoryMemory from "../../src/infrastructure/repository/ScheduleRepositoryMemory";
+import ScheduleRepositoryMemory from "../../src/infrastructure/repository/schedule-repository-memory";
 
 test('Should cancel usecase schedule appointment', async () => {
   const repository = new ScheduleRepositoryMemory();

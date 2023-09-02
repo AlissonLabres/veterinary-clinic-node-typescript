@@ -2,7 +2,7 @@ import TimeOrDateException from "../../src/domain/exception/time-or-date-excepti
 import CreateScheduleUrgent from "../../src/domain/usecase/create-schedule-urgent/create-schedule-urgent";
 import ScheduleUrgentInput from "../../src/domain/usecase/create-schedule-urgent/schedule-urgent-input";
 import ScheduleUrgentOutput from "../../src/domain/usecase/create-schedule-urgent/schedule-urgent-output";
-import ScheduleRepositoryMemory from "../../src/infrastructure/repository/ScheduleRepositoryMemory";
+import ScheduleRepositoryMemory from "../../src/infrastructure/repository/schedule-repository-memory";
 
 test('Should create usecase schedule urgent', async () => {
   const repository = new ScheduleRepositoryMemory();

@@ -1,5 +1,5 @@
 import pgp from "pg-promise";
-import DatabaseConnection from "./DatabaseConnection";
+import DatabaseConnection from "./database-connection";
 
 export default class PostgresConnection implements DatabaseConnection {
   private pgp: any;
