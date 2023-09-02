@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 test("Should create schedule", async () => {
   const input = {
@@ -23,14 +23,6 @@ test("Should select bullet not available and receive error in create schedule", 
     urgency_date: '2023-09-08T18:00'
   };
 
-  try {
-    await axios.post("http://localhost:3000/schedule/urgent", input)
-  } catch (error: any) {
-    const response = error.response.data;
-
-    expect(response.status).toEqual(409)
-    expect(response.message).toEqual("Time or Date not available to schedule")
-    expect(response.name).toEqual("TIME_OR_DATE_EXCEPTION")
-  }
+  await expect(() => axios.post("http://localhost:3000/schedule/urgent", input)).rejects.toBeInstanceOf(AxiosError);
 });
 

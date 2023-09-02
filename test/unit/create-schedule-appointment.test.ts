@@ -29,12 +29,7 @@ test('Don`t should create usecase schedule appointment with bullet not available
     animal_id: 1,
     bullet_code: '2023-08-08T18:00'
   };
-
-  try {
-    await useCase.execute(input);
-  } catch (error: any) {
-    expect(error.status).toEqual(409)
-    expect(error.message).toEqual("Time or Date not available to schedule")
-    expect(error.name).toEqual("TIME_OR_DATE_EXCEPTION")
-  }
+  
+  const exception = { name: 'TIME_OR_DATE_EXCEPTION', message: 'Time or Date not available to schedule', status: 409 };
+  await expect(() => useCase.execute(input)).rejects.toEqual(exception);
 })

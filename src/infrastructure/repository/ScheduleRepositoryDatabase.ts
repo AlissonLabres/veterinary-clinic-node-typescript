@@ -20,6 +20,23 @@ export default class ScheduleRepositoryDatabase implements ScheduleRepository {
     return schedule_id;
   }
 
+  async getSchedule(schedule_id: number): Promise<Schedule> {
+    const [scheduleData] = await this.databaseConnection.query("select * from schedule where schedule_id = $1", [schedule_id]);
+    return Schedule.restore(scheduleData);
+  }
+
+  async cancelSchedule(schedule: Schedule): Promise<void> {
+    await this.databaseConnection.query(
+      "update schedule set schedule_status = $1 where schedule.schedule_id = $2",
+      [schedule.schedule_status, schedule.schedule_id]
+    );
+
+    await this.databaseConnection.query(
+      "UPDATE bullet SET schedule_id = $1 WHERE bullet.bullet_id = $2",
+      [null, schedule.bullet_id]
+    );
+  }
+
   async getBulletByCode(code: string): Promise<Bullet> {
     const [bulletData] = await this.databaseConnection.query("select * from bullet where bullet_code = $1 and schedule_id is null", [code]);
     return Bullet.restore(bulletData);

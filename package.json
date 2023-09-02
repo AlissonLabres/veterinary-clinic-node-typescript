@@ -5,7 +5,10 @@
   "scripts": {
     "start": "nodemon src/main.ts",
     "build": "tsc",
-    "test": "tsc && jest dist/"
+    "test:unit": "tsc && jest dist/test/unit/",
+    "test:integration": "tsc && jest dist/test/integration/",
+    "test": "tsc && jest dist/test/",
+    "coverage": "tsc && jest --coverage=true dist/test/"
   },
   "keywords": [],
   "author": "",

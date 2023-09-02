@@ -6,6 +6,7 @@ import ScheduleRepositoryDatabase from "./infrastructure/repository/ScheduleRepo
 import PostgresConnection from "./infrastructure/database/PostgresConnection";
 import TimeOrDateException from './domain/exception/time-or-date-exception';
 import CreateScheduleUrgent from './domain/usecase/create-schedule-urgent/create-schedule-urgent';
+import CancelScheduleAppointment from './domain/usecase/cancel-schedule-appointment/cancel-schedule-appoitment';
 
 const app = express();
 app.use(express.json());
@@ -41,6 +42,25 @@ app.post("/schedule/urgent", async (request: Request, response: Response) => {
     const schedule = await usecase.execute({ user_id, medical_id, animal_id, urgency_date });
 
     response.json(schedule);
+  } catch (error) {
+    const message = !(error instanceof TimeOrDateException)
+      ? { name: 'GENERIC_ERROR', message: 'Exception to create schedule', status: 500 }
+      : error;
+
+    response.status(message.status).json(message)
+  }
+});
+
+app.post("/schedule/appointment/cancel", async (request: Request, response: Response) => {
+  const { schedule_id } = request.body;
+
+  try {
+    const databaseConnection = PostgresConnection.OpenConnection();
+    const repository = new ScheduleRepositoryDatabase(databaseConnection);
+    const usecase = new CancelScheduleAppointment(repository);
+
+    await usecase.execute(schedule_id);
+    response.status(204).json();
   } catch (error) {
     const message = !(error instanceof TimeOrDateException)
       ? { name: 'GENERIC_ERROR', message: 'Exception to create schedule', status: 500 }

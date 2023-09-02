@@ -1,3 +1,4 @@
+import TimeOrDateException from "../../src/domain/exception/time-or-date-exception";
 import CreateScheduleUrgent from "../../src/domain/usecase/create-schedule-urgent/create-schedule-urgent";
 import ScheduleUrgentInput from "../../src/domain/usecase/create-schedule-urgent/schedule-urgent-input";
 import ScheduleUrgentOutput from "../../src/domain/usecase/create-schedule-urgent/schedule-urgent-output";
@@ -30,11 +31,5 @@ test('Don`t should create usecase schedule urgent with bullet not available', as
     urgency_date: '2023-10-08T18:00'
   };
 
-  try {
-    await useCase.execute(input);
-  } catch (error: any) {
-    expect(error.status).toEqual(409)
-    expect(error.message).toEqual("Time or Date not available to schedule")
-    expect(error.name).toEqual("TIME_OR_DATE_EXCEPTION")
-  }
+  await expect(() => useCase.execute(input)).rejects.toBeInstanceOf(TimeOrDateException);
 })
