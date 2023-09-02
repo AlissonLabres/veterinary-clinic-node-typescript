@@ -12,11 +12,16 @@ export default class ScheduleRepositoryDatabase implements ScheduleRepository {
       ['SCHEDULED', schedule.user_id, schedule.medical_id, schedule.animal_id, schedule.bullet_id, 'APPOINTMENT']
     );
 
+    await this.databaseConnection.query(
+      "UPDATE bullet SET schedule_id = $1 WHERE bullet.bullet_id = $2",
+      [schedule_id, schedule.bullet_id]
+    );
+
     return schedule_id;
   }
 
   async getBulletByCode(code: string): Promise<Bullet> {
-    const [bulletData] = await this.databaseConnection.query("select * from bullet where bullet_code = $1", [code]);
+    const [bulletData] = await this.databaseConnection.query("select * from bullet where bullet_code = $1 and schedule_id is null", [code]);
     return Bullet.restore(bulletData);
   }
 

@@ -5,7 +5,7 @@ test("Should create schedule", async () => {
     user_id: 1,
     medical_id: 1,
     animal_id: 1,
-    urgency_date: '2023-08-05T10:00'
+    urgency_date: '2023-09-08T16:00'
   };
 
   const response = await axios.post("http://localhost:3000/schedule/urgent", input);
@@ -20,11 +20,11 @@ test("Should select bullet not available and receive error in create schedule", 
     user_id: 1,
     medical_id: 1,
     animal_id: 1,
-    bullet_code: '2023-08-08T18:00'
+    urgency_date: '2023-09-08T18:00'
   };
 
   try {
-    await axios.post("http://localhost:3000/schedule/appointment", input)
+    await axios.post("http://localhost:3000/schedule/urgent", input)
   } catch (error: any) {
     const response = error.response.data;
 

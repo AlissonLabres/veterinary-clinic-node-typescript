@@ -18,12 +18,19 @@ export default class ScheduleRepositoryMemory implements ScheduleRepository {
   createSchedule(schedule: Schedule): Promise<number> {
     schedule.schedule_id = crypto.randomInt(30);
     this.schedules.push(schedule);
+    this.bullets = this.bullets.map((bullet) => {
+      if (bullet.bullet_id === schedule.bullet_id) {
+        bullet.schedule_id = schedule.schedule_id;
+      }
+
+      return bullet;
+    })
 
     return Promise.resolve(schedule.schedule_id);
   }
 
   getBulletByCode(code: string): Promise<Bullet> {
-    const bulletData = this.bullets.find(bullet => bullet.bullet_code === code);
+    const bulletData = this.bullets.find(bullet => bullet.bullet_code === code && !bullet.schedule_id);
     return Promise.resolve(Bullet.restore(bulletData));
   }
 
