@@ -1,4 +1,3 @@
-
 import UsecaseFactory from "./factory/usecase-factory";
 import HttpAdapter from "./entrypoint/http-adapter";
 
@@ -21,10 +20,6 @@ export default class ScheduleController {
     this.httpAdapter.router('post', '/schedule/appointment/cancel', 204,
       async (body: any) => this.cancelScheduleAppointment(body)
     )
-  }
-
-  start() {
-    this.httpAdapter.start(3000);
   }
 
   private async createScheduleAppointment(body: any) {

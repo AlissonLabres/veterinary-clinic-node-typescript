@@ -11,4 +11,6 @@ export default interface ScheduleRepository {
   getBulletByCode(code: string): Promise<Bullet>;
 
   getNearestBullet(urgency_date: string): Promise<Bullet>;
+
+  getBullets(): Promise<Bullet[]>;
 }

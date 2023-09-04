@@ -47,4 +47,15 @@ export default class ScheduleRepositoryDatabase implements ScheduleRepository {
     return Bullet.restore(bulletData);
   }
 
+  async getBullets(): Promise<Bullet[]> {
+    const bulletsData = await this.databaseConnection.query("select * from bullet where schedule_id is null", []);
+    const bullets: Bullet[] = [];
+
+    for (const bulletData of bulletsData) {
+      bullets.push(Bullet.restore(bulletData));
+    }
+
+    return bullets;
+  }
+
 }

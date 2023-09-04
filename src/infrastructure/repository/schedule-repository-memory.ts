@@ -99,4 +99,15 @@ export default class ScheduleRepositoryMemory implements ScheduleRepository {
     }
   }
 
+  getBullets(): Promise<Bullet[]> {
+    const bulletsData = this.bullets.filter(bullet => !bullet.schedule_id);
+    const bullets: Bullet[] = [];
+
+    for (const bulletData of bulletsData) {
+      bullets.push(Bullet.restore(bulletData));
+    }
+
+    return Promise.resolve(bullets);
+  }
+
 }
