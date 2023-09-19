@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import cors from 'cors';
 import HttpAdapter from "../../application/entrypoint/http-adapter";
 
 export default class ExpressAdapter implements HttpAdapter {
@@ -7,6 +8,7 @@ export default class ExpressAdapter implements HttpAdapter {
   constructor() {
     this.application = express();
     this.application.use(express.json());
+    this.application.use(cors())
   }
 
   router(method: string, path: string, status: number, execute: Function): void {
