@@ -48,9 +48,15 @@ jobs:
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
+      - id: 'auth-token'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          token_format: 'access_token'
+
       - name: Show Output Authetication
         env:
-          STEPS_CONTEXT: ${{ toJson(steps.auth.outputs) }}
+          STEPS_CONTEXT: ${{ toJson(steps) }}
         run: echo "$STEPS_CONTEXT"
 
       - name: Docker Auth
