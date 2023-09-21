@@ -50,7 +50,7 @@ jobs:
 
       - name: Show Output Authetication
         env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
+          STEPS_CONTEXT: ${{ toJson(steps.auth.outputs) }}
         run: echo "$STEPS_CONTEXT"
 
       - name: Docker Auth
