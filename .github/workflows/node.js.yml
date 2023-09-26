@@ -58,6 +58,7 @@ jobs:
 
       - name: Build and Push Container
         run: |-
+          gcloud docker --authorize-only
           docker build -t "gcr.io/cloudrun/${{ env.SERVICE }}:${{ github.sha }}" ./
           docker push "gcr.io/cloudrun/${{ env.SERVICE }}:${{ github.sha }}"
 
