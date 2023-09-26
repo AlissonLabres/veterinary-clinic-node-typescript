@@ -11,9 +11,8 @@ on:
 
 env:
   PROJECT_ID: lab-cloud-testing
-  GAR_LOCATION: southamerica-east1
-  SERVICE: cloud-run-nodejs-deploy
-  REGION: southamerica-east1
+  GAR_LOCATION: us
+  SERVICE: cloud-run-node
 
 jobs:
   build:
@@ -58,7 +57,6 @@ jobs:
 
       - name: Build and Push Container
         run: |-
-          gcloud docker --authorize-only
           docker build -t "gcr.io/cloudrun/${{ env.SERVICE }}:${{ github.sha }}" ./
           docker push "gcr.io/cloudrun/${{ env.SERVICE }}:${{ github.sha }}"
 
