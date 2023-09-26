@@ -56,6 +56,9 @@ jobs:
           password: '${{ secrets.GOOGLE_CREDENTIALS }}'
           registry: '${{ env.GAR_LOCATION }}-docker.pkg.dev'
 
+      - name: Logging
+        run: cat ${{ github.repository.name }} && ${{ github.event.repository.name }}
+
       - name: Build and Push Container
         run: |-
           docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{ github.repository }}:${{ github.sha }}" ./
