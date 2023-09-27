@@ -58,8 +58,8 @@ jobs:
 
       - name: Build and Push Container
         run: |-
-          docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{ github.repository }}:${{ github.sha }}" ./
-          docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{ github.repository }}:${{ github.sha }}"
+          docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{ github.event.repository.name }}:${{ github.sha }}" ./
+          docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{ github.event.repository.name }}:${{ github.sha }}"
 
       - name: Deploy to Cloud Run
         id: deploy
@@ -67,7 +67,7 @@ jobs:
         with:
           service: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
-          image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{ github.repository }}:${{ github.sha }}
+          image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{ github.event.repository.name }}:${{ github.sha }}
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
