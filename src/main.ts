@@ -17,4 +17,4 @@ const controllerBullets = new BulletController(httpClient, usecaseFactory);
 controllerScheduler.register();
 controllerBullets.register();
 
-httpClient.start(3000);
+httpClient.start(8080);
