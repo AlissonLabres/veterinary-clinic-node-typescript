@@ -1,28 +1,37 @@
-import axios, { AxiosError } from "axios";
+import TimeOrDateException from "../../src/domain/exception/time-or-date-exception";
+import CreateScheduleUrgent from "../../src/domain/usecase/create-schedule-urgent/create-schedule-urgent";
+import ScheduleUrgentInput from "../../src/domain/usecase/create-schedule-urgent/schedule-urgent-input";
+import ScheduleUrgentOutput from "../../src/domain/usecase/create-schedule-urgent/schedule-urgent-output";
+import ScheduleRepositoryMemory from "../../src/infrastructure/repository/schedule-repository-memory";
 
-test("Should create schedule", async () => {
-  const input = {
+test('Should create usecase schedule urgent', async () => {
+  const repository = new ScheduleRepositoryMemory();
+  const useCase = new CreateScheduleUrgent(repository);
+  const input: ScheduleUrgentInput = {
     user_id: 1,
     medical_id: 1,
     animal_id: 1,
-    urgency_date: '2023-09-06T16:00'
+    urgency_date: '2023-08-05T10:00'
   };
 
-  const response = await axios.post("http://localhost:3000/schedule/urgent", input);
+  const output: ScheduleUrgentOutput = await useCase.execute(input);
 
-  expect(response.data.schedule_id).toBeDefined();
-  expect(response.data.schedule_status).toEqual("SCHEDULED");
-  expect(response.data.type_service).toEqual("URGENT"); 
-});
+  expect(output.schedule_id).toBeDefined();
+  expect(output.schedule_status).toEqual('SCHEDULED');
+  expect(output.type_service).toEqual('URGENT');
+})
 
-test("Should select bullet not available and receive error in create schedule", async () => {
-  const input = {
+test('Don`t should create usecase schedule urgent with bullet not available', async () => {
+  const repository = new ScheduleRepositoryMemory();
+  const useCase = new CreateScheduleUrgent(repository);
+  const input: ScheduleUrgentInput = {
     user_id: 1,
     medical_id: 1,
     animal_id: 1,
-    urgency_date: '2023-09-08T18:00'
+    urgency_date: '2023-10-08T18:00'
   };
 
-  await expect(() => axios.post("http://localhost:3000/schedule/urgent", input)).rejects.toBeInstanceOf(AxiosError);
-});
-
+  const exception = { name: 'TIME_OR_DATE_EXCEPTION', message: 'Time or Date not available to schedule', status: 409 };
+  await expect(() => useCase.execute(input)).rejects.toEqual(exception);
+  await expect(() => useCase.execute(input)).rejects.toBeInstanceOf(TimeOrDateException);
+})

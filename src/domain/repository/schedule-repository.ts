@@ -10,7 +10,11 @@ export default interface ScheduleRepository {
 
   getBulletByCode(code: string): Promise<Bullet>;
 
+  getBulletById(id: number): Promise<Bullet>;
+
   getNearestBullet(urgency_date: string): Promise<Bullet>;
 
   getBullets(): Promise<Bullet[]>;
+
+  getAllSchedules(user_id: number): Promise<Schedule[]>;
 }

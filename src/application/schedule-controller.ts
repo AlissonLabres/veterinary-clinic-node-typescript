@@ -20,6 +20,10 @@ export default class ScheduleController {
     this.httpAdapter.router('post', '/schedule/appointment/cancel', 204,
       async (body: any) => this.cancelScheduleAppointment(body)
     )
+
+    this.httpAdapter.router('get', '/schedule/$user_id', 200,
+      async (_: any, params: any) => this.getAllSchedules(params)
+    )
   }
 
   private async createScheduleAppointment(body: any) {
@@ -35,5 +39,10 @@ export default class ScheduleController {
   private async cancelScheduleAppointment(body: any) {
     const { schedule_id } = body;
     return this.usecaseFactory.cancelScheduleAppointment.execute(schedule_id);
+  }
+
+  private async getAllSchedules(params: any) {  
+    const { user_id } = params;
+    return this.usecaseFactory.getAllSchedules.execute(user_id);
   }
 }

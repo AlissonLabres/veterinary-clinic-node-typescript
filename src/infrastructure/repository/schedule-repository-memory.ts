@@ -79,6 +79,15 @@ export default class ScheduleRepositoryMemory implements ScheduleRepository {
     })
   }
 
+  getBulletById(id: number): Promise<Bullet> {
+    try {
+      const bulletData = this.bullets.find(bullet => bullet.bullet_id === id);
+      return Promise.resolve(Bullet.restore(bulletData));
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
   getBulletByCode(code: string): Promise<Bullet> {
     try {
       const bulletData = this.bullets.find(bullet => bullet.bullet_code === code && !bullet.schedule_id);
@@ -108,6 +117,21 @@ export default class ScheduleRepositoryMemory implements ScheduleRepository {
     }
 
     return Promise.resolve(bullets);
+  }
+
+  getAllSchedules(user_id: number): Promise<Schedule[]> {
+    try {
+      const schedulesData = this.schedules.filter(schedule => schedule.user_id === user_id);
+      const schedules: Schedule[] = [];
+
+      for (const scheduleData of schedulesData) {
+        schedules.push(Schedule.restore(scheduleData));
+      }
+
+      return Promise.resolve(schedules);
+    } catch (error) {
+      return Promise.reject(error);
+    }
   }
 
 }

@@ -1,23 +1,28 @@
-import axios, { AxiosError } from "axios";
+import Schedule from "../../src/domain/entity/schedule";
+import ScheduleException from "../../src/domain/exception/schedule-exception";
+import CancelScheduleAppointment from "../../src/domain/usecase/cancel-schedule-appointment/cancel-schedule-appoitment";
 
-test("Should cancel schedule", async () => {
-  const create = {
-    user_id: 1,
-    medical_id: 1,
-    animal_id: 1,
-    bullet_code: '2023-09-03T16:00'
-  };
+import ScheduleRepositoryMemory from "../../src/infrastructure/repository/schedule-repository-memory";
 
-  const { data } = await axios.post("http://localhost:3000/schedule/appointment", create);
+test('Should cancel usecase schedule appointment', async () => {
+  const repository = new ScheduleRepositoryMemory();
+  const useCase = new CancelScheduleAppointment(repository);
 
-  const input = { schedule_id: data.schedule_id };
-  const response = await axios.post("http://localhost:3000/schedule/appointment/cancel", input);
-  
-  expect(response.status).toEqual(204)
-});
+  const schedule = Schedule.create(1, 1, 1, 1);
+  const schedule_id = await repository.createSchedule(schedule);
 
+  await useCase.execute(schedule_id);
 
-test("Should receive error when cancel schedule_id not created", async () => {
-  const input = { schedule_id: 500 };
-  await expect(() => axios.post("http://localhost:3000/schedule/appointment/cancel", input)).rejects.toBeInstanceOf(AxiosError);
-});
+  const scheduleData = await repository.getSchedule(schedule_id);
+  expect(scheduleData.schedule_status).toBe('CANCELED');
+  expect(scheduleData.bullet_id).toBeUndefined();
+})
+
+test('Should receive schedule not found when cancel schedule appointment not created', async () => {
+  const repository = new ScheduleRepositoryMemory();
+  const useCase = new CancelScheduleAppointment(repository);
+
+  const exception = { name: 'SCHEDULE_EXCEPTION', message: 'Schedule not found', status: 404 };
+  await expect(() => useCase.execute(500)).rejects.toEqual(exception);
+  await expect(() => useCase.execute(500)).rejects.toBeInstanceOf(ScheduleException);
+})

@@ -37,6 +37,11 @@ export default class ScheduleRepositoryDatabase implements ScheduleRepository {
     );
   }
 
+  async getBulletById(id: number): Promise<Bullet> {
+    const [bulletData] = await this.databaseConnection.query("select * from bullet where bullet_id = $1", [id]);
+    return Bullet.restore(bulletData);
+  }
+
   async getBulletByCode(code: string): Promise<Bullet> {
     const [bulletData] = await this.databaseConnection.query("select * from bullet where bullet_code = $1 and schedule_id is null", [code]);
     return Bullet.restore(bulletData);
@@ -56,6 +61,17 @@ export default class ScheduleRepositoryDatabase implements ScheduleRepository {
     }
 
     return bullets;
+  }
+
+  async getAllSchedules(user_id: number): Promise<Schedule[]> {
+    const schedulesData = await this.databaseConnection.query("select * from schedule where user_id = $1", [user_id]);
+    const schedules: Schedule[] = [];
+
+    for (const scheduleData of schedulesData) {
+      schedules.push(Schedule.restore(scheduleData));
+    }
+
+    return schedules;
   }
 
 }
