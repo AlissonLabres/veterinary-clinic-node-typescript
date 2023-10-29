@@ -17,7 +17,7 @@ export default class ScheduleController {
       async (body: any) => this.createScheduleUrgent(body)
     )
 
-    this.httpAdapter.router('post', '/schedule/appointment/cancel', 204,
+    this.httpAdapter.router('post', '/schedule/cancel', 204,
       async (body: any) => this.cancelScheduleAppointment(body)
     )
 

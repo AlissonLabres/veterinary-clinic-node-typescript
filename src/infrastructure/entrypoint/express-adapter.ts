@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import HttpAdapter from "../../application/entrypoint/http-adapter";
+import { SwaggerConfig } from '../../config/swagger-config';
 
 export default class ExpressAdapter implements HttpAdapter {
   private application: any
@@ -8,7 +9,9 @@ export default class ExpressAdapter implements HttpAdapter {
   constructor() {
     this.application = express();
     this.application.use(express.json());
-    this.application.use(cors())
+    this.application.use(cors());
+
+    SwaggerConfig(this.application);
   }
 
   router(method: string, path: string, status: number, execute: Function): void {
@@ -28,6 +31,6 @@ export default class ExpressAdapter implements HttpAdapter {
   }
 
   start(port: number): void {
-    this.application.listen(port);
+    this.application.listen(port, () => console.log(`Server running on port ${port}`));
   }
 }

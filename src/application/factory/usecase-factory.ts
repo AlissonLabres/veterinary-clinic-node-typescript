@@ -13,5 +13,5 @@ export default class UsecaseFactory {
   createScheduleUrgent: CreateScheduleUrgent = new CreateScheduleUrgent(this.scheduleRepository);
   cancelScheduleAppointment: CancelScheduleAppointment = new CancelScheduleAppointment(this.scheduleRepository);
   getBullets: GetBullets = new GetBullets(this.scheduleRepository);
-  getAllSchedules: any = new GetAllSchedules(this.scheduleRepository);
+  getAllSchedules: GetAllSchedules = new GetAllSchedules(this.scheduleRepository);
 }
