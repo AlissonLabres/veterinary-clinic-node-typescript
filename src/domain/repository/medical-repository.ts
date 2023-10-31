@@ -5,7 +5,9 @@ export default interface MedicalRepository {
   getMedicalsBySpeciality(speciality: string): Promise<Medical[]>;  
 
   getMedicalById(id: number): Promise<Medical>;
-  
+
   availableTo(bullet_code: string, id: number): Promise<boolean>;
+
+  availableUrgentTo(bullet_code: string): Promise<Medical>;
 
 }

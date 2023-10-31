@@ -5,16 +5,34 @@ import DatabaseConnection from "./database/database-connection";
 export default class MedicalRepositoryDatabase implements MedicalRepository {
 
   constructor(private readonly databaseConnection: DatabaseConnection) { }
+
+  async availableUrgentTo(bullet_code: string): Promise<Medical> {
+    const [medicalData] = await this.databaseConnection.query(`
+      SELECT DISTINCT medical.*
+      FROM medical
+      WHERE NOT EXISTS (
+        SELECT 1
+        FROM schedule
+        JOIN bullet ON schedule.schedule_id = bullet.schedule_id
+        WHERE bullet.bullet_code = $1
+        AND schedule.medical_id = medical.medical_id
+      )
+    `, [bullet_code]);
+
+    return Medical.restore(medicalData);
+  }
   
   async availableTo(bullet_code: string, id: number): Promise<boolean> {
     const [medicalData] = await this.databaseConnection.query(`
-      SELECT medical.* FROM bullet
-        INNER JOIN schedule
-        ON schedule.schedule_id = bullet.schedule_id
-        INNER JOIN medical
-        ON medical.medical_id = schedule.medical_id 
-      WHERE bullet.bullet_code = $1
-      AND medical.medical_id = $2
+      SELECT DISTINCT medical.*
+      FROM medical
+      WHERE EXISTS (
+        SELECT 1
+        FROM schedule
+        JOIN bullet ON schedule.schedule_id = bullet.schedule_id
+        WHERE bullet.bullet_code = $1
+        AND schedule.medical_id = medical.medical_id
+      ) AND medical.medical_id = $2
     `, [bullet_code, id]);
 
     return !medicalData;

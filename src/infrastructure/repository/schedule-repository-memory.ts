@@ -81,7 +81,10 @@ export default class ScheduleRepositoryMemory implements ScheduleRepository {
 
   getNearestBullet(urgency_date: string): Promise<Bullet> {
     try {
-      const bulletsSort = this.memoryConnection.bullets.sort((bulletA, bulletB) => new Date(bulletA.bullet_code).getTime() - new Date(bulletB.bullet_code).getTime());
+      const bulletsSort = this.memoryConnection.bullets
+        .filter(bullet => !bullet.schedule_id)
+        .sort((bulletA, bulletB) => new Date(bulletA.bullet_code).getTime() - new Date(bulletB.bullet_code).getTime());
+
       const bulletData = bulletsSort.find((bullet) => new Date(urgency_date).getTime() < new Date(bullet.bullet_code).getTime())
   
       return Promise.resolve(Bullet.restore(bulletData));

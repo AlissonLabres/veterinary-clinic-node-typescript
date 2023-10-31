@@ -11,7 +11,7 @@
  * POST /schedule/urgent
  * @summary Create schedule urgent
  * @tags Schedule
- * @param {ScheduleUrget} request.body.required
+ * @param {ScheduleUrgent} request.body.required
  * @return {ScheduleResponse} 200 - Success response
  * @return {ErrorResponse} 400 - Error response
  */

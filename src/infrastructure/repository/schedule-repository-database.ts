@@ -48,7 +48,7 @@ export default class ScheduleRepositoryDatabase implements ScheduleRepository {
   }
 
   async getNearestBullet(urgency_date: string): Promise<Bullet> {
-    const [bulletData] = await this.databaseConnection.query("select * from bullet where bullet_code >= $1 order by bullet_code asc", [urgency_date]);
+    const [bulletData] = await this.databaseConnection.query("select * from bullet where bullet_code >= $1 and schedule_id is null order by bullet_code asc", [urgency_date]);
     return Bullet.restore(bulletData);
   }
 

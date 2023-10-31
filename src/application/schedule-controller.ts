@@ -32,8 +32,8 @@ export default class ScheduleController {
   }
 
   private async createScheduleUrgent(body: any) {
-    const { user_id, medical_id, animal_id, urgency_date } = body;
-    return this.usecaseFactory.createScheduleUrgent.execute({ user_id, medical_id, animal_id, urgency_date });
+    const { user_id, animal_id, urgency_date } = body;
+    return this.usecaseFactory.createScheduleUrgent.execute({ user_id, animal_id, urgency_date });
   }
 
   private async cancelScheduleAppointment(body: any) {
