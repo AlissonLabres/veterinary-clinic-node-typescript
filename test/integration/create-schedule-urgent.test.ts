@@ -2,10 +2,12 @@ import TimeOrDateException from "../../src/domain/exception/time-or-date-excepti
 import CreateScheduleUrgent from "../../src/domain/usecase/create-schedule-urgent/create-schedule-urgent";
 import ScheduleUrgentInput from "../../src/domain/usecase/create-schedule-urgent/schedule-urgent-input";
 import ScheduleUrgentOutput from "../../src/domain/usecase/create-schedule-urgent/schedule-urgent-output";
+import MemoryConnection from "../../src/infrastructure/repository/database/memory-connection";
 import ScheduleRepositoryMemory from "../../src/infrastructure/repository/schedule-repository-memory";
 
 test('Should create usecase schedule urgent', async () => {
-  const repository = new ScheduleRepositoryMemory();
+  const memoryConnection = new MemoryConnection();
+  const repository = new ScheduleRepositoryMemory(memoryConnection);
   const useCase = new CreateScheduleUrgent(repository);
   const input: ScheduleUrgentInput = {
     user_id: 1,
@@ -22,7 +24,8 @@ test('Should create usecase schedule urgent', async () => {
 })
 
 test('Don`t should create usecase schedule urgent with bullet not available', async () => {
-  const repository = new ScheduleRepositoryMemory();
+  const memoryConnection = new MemoryConnection();
+  const repository = new ScheduleRepositoryMemory(memoryConnection);
   const useCase = new CreateScheduleUrgent(repository);
   const input: ScheduleUrgentInput = {
     user_id: 1,

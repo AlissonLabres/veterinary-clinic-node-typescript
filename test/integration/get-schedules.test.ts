@@ -1,10 +1,12 @@
 import CreateScheduleAppointment from "../../src/domain/usecase/create-schedule-appointment/create-schedule-appointment"
 import AllScheduleOutput from "../../src/domain/usecase/get-all-schedules/all-schedule-output";
 import GetAllSchedules from "../../src/domain/usecase/get-all-schedules/get-all-schedules";
+import MemoryConnection from "../../src/infrastructure/repository/database/memory-connection";
+import MedicalRepositoryMemory from "../../src/infrastructure/repository/medica-repository-memory";
 import ScheduleRepositoryMemory from "../../src/infrastructure/repository/schedule-repository-memory"
 
 test('Should empty list when execute usecase GetAllSchedules', async () => {
-  const repository = new ScheduleRepositoryMemory();
+  const repository = new ScheduleRepositoryMemory(new MemoryConnection());
   const useCase = new GetAllSchedules(repository);
   const output: AllScheduleOutput[] = await useCase.execute(1);
 
@@ -12,8 +14,10 @@ test('Should empty list when execute usecase GetAllSchedules', async () => {
 })
 
 test('Should create schedule and list all', async () => {
-  const repository = new ScheduleRepositoryMemory();
-  const create = new CreateScheduleAppointment(repository);
+  const memoryConnection = new MemoryConnection();
+  const medicalRepository = new MedicalRepositoryMemory(memoryConnection);
+  const scheduleRepository = new ScheduleRepositoryMemory(memoryConnection);
+  const create = new CreateScheduleAppointment(scheduleRepository, medicalRepository);
   await create.execute({
     user_id: 1,
     medical_id: 1,
@@ -21,7 +25,7 @@ test('Should create schedule and list all', async () => {
     bullet_code: '2023-08-08T16:00'
   });
 
-  const useCase = new GetAllSchedules(repository);
+  const useCase = new GetAllSchedules(scheduleRepository);
   const [output]: AllScheduleOutput[] = await useCase.execute(1);
 
   expect(output.schedule_id).toBeDefined();

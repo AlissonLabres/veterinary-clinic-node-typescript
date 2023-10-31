@@ -1,11 +1,12 @@
 import Schedule from "../../src/domain/entity/schedule";
 import ScheduleException from "../../src/domain/exception/schedule-exception";
 import CancelScheduleAppointment from "../../src/domain/usecase/cancel-schedule-appointment/cancel-schedule-appoitment";
+import MemoryConnection from "../../src/infrastructure/repository/database/memory-connection";
 
 import ScheduleRepositoryMemory from "../../src/infrastructure/repository/schedule-repository-memory";
 
 test('Should cancel usecase schedule appointment', async () => {
-  const repository = new ScheduleRepositoryMemory();
+  const repository = new ScheduleRepositoryMemory(new MemoryConnection());
   const useCase = new CancelScheduleAppointment(repository);
 
   const schedule = Schedule.create(1, 1, 1, 1);
@@ -19,7 +20,7 @@ test('Should cancel usecase schedule appointment', async () => {
 })
 
 test('Should receive schedule not found when cancel schedule appointment not created', async () => {
-  const repository = new ScheduleRepositoryMemory();
+  const repository = new ScheduleRepositoryMemory(new MemoryConnection());
   const useCase = new CancelScheduleAppointment(repository);
 
   const exception = { name: 'SCHEDULE_EXCEPTION', message: 'Schedule not found', status: 404 };

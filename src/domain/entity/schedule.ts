@@ -1,4 +1,4 @@
-import TypeService from "./type-service";
+import TypeService from "./value-object/type-service";
 import ScheduleException from "../exception/schedule-exception";
 
 export default class Schedule {
