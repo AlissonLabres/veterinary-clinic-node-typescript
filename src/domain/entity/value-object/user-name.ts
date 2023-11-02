@@ -1,6 +1,6 @@
 import UserException from "../../exception/user-exception";
 
-export default class Name {
+export default class UserName {
   private _value: string;
 
   constructor(name: string) {

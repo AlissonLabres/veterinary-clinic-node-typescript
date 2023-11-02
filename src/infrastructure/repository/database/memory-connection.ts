@@ -30,11 +30,21 @@ interface UsersMemory {
   user_id: number
 }
 
+interface AnimalsMemory {
+  animal_name: string,
+  animal_age: number,
+  animal_weight: number,
+  animal_type: string,
+  animal_breed: string,
+  animal_id: number
+}
+
 export default class MemoryConnection {
   bullets: BulletMemory[] = [];
   schedules: ScheduleMemory[] = [];
   medicals: MedicalMemory[];
   users: UsersMemory[] = [];
+  animals: AnimalsMemory[] = [];
 
   constructor() {
     this.users = [];

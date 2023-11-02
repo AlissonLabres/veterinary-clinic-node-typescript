@@ -1,12 +1,12 @@
 import UserException from "../exception/user-exception";
 import Email from "./value-object/email";
-import Name from "./value-object/name";
+import UserName from "./value-object/user-name";
 import Phone from "./value-object/phone";
 
 export default class User {
 
   user_id: number | undefined;
-  user_name: Name;
+  user_name: UserName;
   user_email: Email;
   user_phone: Phone;
   user_animals: number[];
@@ -19,7 +19,7 @@ export default class User {
     user_animals: number[]
   ) {
     this.user_id = user_id;
-    this.user_name = new Name(user_name);
+    this.user_name = new UserName(user_name);
     this.user_email = new Email(user_email);
     this.user_phone = new Phone(user_phone);
     this.user_animals = user_animals;
