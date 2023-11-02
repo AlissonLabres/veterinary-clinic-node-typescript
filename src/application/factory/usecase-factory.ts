@@ -7,7 +7,7 @@ import CreateScheduleUrgent from "../../domain/usecase/schedule/create-schedule-
 import CreateUser from "../../domain/usecase/user/create-user/create-user";
 import GetAllSchedules from "../../domain/usecase/schedule/get-all-schedules/get-all-schedules";
 import GetBullets from "../../domain/usecase/bullets/get-bullets/get-bullets";
-import getMedicalsBySpeciality from "../../domain/usecase/medicals/get-medical-by-speciality/get-medical-by-speciality";
+import getMedicalsBySpeciality from "../../domain/usecase/medical/get-medical-by-speciality/get-medical-by-speciality";
 
 export default class UsecaseFactory {
 
