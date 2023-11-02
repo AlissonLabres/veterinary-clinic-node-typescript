@@ -1,10 +1,8 @@
 import Schedule from "../../../src/domain/entity/schedule";
 import User from "../../../src/domain/entity/user";
-import CreateScheduleAppointment from "../../../src/domain/usecase/schedule/create-schedule-appointment/create-schedule-appointment"
 import AllScheduleOutput from "../../../src/domain/usecase/schedule/get-all-schedules/all-schedule-output";
 import GetAllSchedules from "../../../src/domain/usecase/schedule/get-all-schedules/get-all-schedules";
 import MemoryConnection from "../../../src/infrastructure/repository/database/memory-connection";
-import MedicalRepositoryMemory from "../../../src/infrastructure/repository/medical/medica-repository-memory";
 import ScheduleRepositoryMemory from "../../../src/infrastructure/repository/schedule/schedule-repository-memory"
 import UserRepositoryMemory from "../../../src/infrastructure/repository/user/user-repository-memory";
 
