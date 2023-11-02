@@ -13,8 +13,9 @@ const factoryRepository = new RepositoryFactory(NODE_ENV || 'local');
 
 const scheduleRepository = factoryRepository.createScheduleRepository();
 const medicalRepository = factoryRepository.createMedicalRepository();
+const userRepository = factoryRepository.createUserRepository();
 
-const usecaseFactory = new UsecaseFactory(scheduleRepository, medicalRepository);
+const usecaseFactory = new UsecaseFactory(scheduleRepository, medicalRepository, userRepository);
 const httpClient = new ExpressAdapter();
 
 const controllerFactory = new ControllerFactory(httpClient, usecaseFactory);

@@ -22,13 +22,22 @@ interface MedicalMemory {
   medical_id: number
 }
 
+interface UsersMemory {
+  user_name: string,
+  user_email: string,
+  user_phone: string,
+  user_animals: string,
+  user_id: number
+}
 
 export default class MemoryConnection {
   bullets: BulletMemory[] = [];
   schedules: ScheduleMemory[] = [];
   medicals: MedicalMemory[];
+  users: UsersMemory[] = [];
 
   constructor() {
+    this.users = [];
     this.schedules = [];
     this.bullets = [];
     this.bullets.push(

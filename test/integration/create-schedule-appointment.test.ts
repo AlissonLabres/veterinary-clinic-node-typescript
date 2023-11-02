@@ -61,7 +61,7 @@ test('Don`t should create usecase schedule appointment with medical inexistent',
   await expect(() => useCase.execute(input)).rejects.toBeInstanceOf(MedicalException);
 })
 
-test('Should create usecase schedule appointment', async () => {
+test('Don`t should create second usecase schedule appointment with medical equals', async () => {
   const memoryConnection = new MemoryConnection();
   const medicalRepository = new MedicalRepositoryMemory(memoryConnection);
   const scheduleRepository = new ScheduleRepositoryMemory(memoryConnection);

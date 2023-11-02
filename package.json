@@ -6,7 +6,6 @@
     "start": "nodemon src/main.ts",
     "build": "tsc",
     "test:unit": "tsc && jest dist/test/unit/",
-    "test:appointment": "tsc && jest dist/test/integration/create-schedule-appointment",
     "test:integration": "tsc && jest dist/test/integration/",
     "test": "tsc && jest dist/test/",
     "coverage": "tsc && jest --coverage=true dist/test/"
