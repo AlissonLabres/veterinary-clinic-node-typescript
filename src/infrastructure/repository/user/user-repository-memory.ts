@@ -6,6 +6,24 @@ import MemoryConnection from "../database/memory-connection";
 export default class UserRepositoryMemory implements UserRepository {
 
   constructor(private readonly memoryConnection: MemoryConnection) { }
+
+  getUserById(id: number): Promise<User> {
+    const user = this.memoryConnection.users.find(user => user.user_id === id);
+
+    if (!user) {
+      return Promise.reject(new Error('User not found'));
+    }
+
+    return Promise.resolve(
+      User.restore({
+        user_id: user.user_id,
+        user_name: user.user_name,
+        user_email: user.user_email,
+        user_phone: user.user_phone,
+        user_animals: user.user_animals.split(',')
+      })
+    );
+  }
   
   getUsers(): Promise<User[]> {
     return Promise.resolve(

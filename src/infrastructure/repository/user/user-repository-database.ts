@@ -6,8 +6,16 @@ export default class UserRepositoryDatabase implements UserRepository {
 
   constructor(private readonly databaseConnection: DatabaseConnection) { }
 
-  getUsers(): Promise<User[]> {
-    throw new Error("Method not implemented.");
+  async getUserById(id: number): Promise<User> {
+    const [user] = await this.databaseConnection.query(`SELECT * FROM users WHERE user_id = $1`, [id]);
+
+    return User.restore({ ...user, user_animals: user.user_animals.split(',') });
+  }
+
+  async getUsers(): Promise<User[]> {
+    const users = await this.databaseConnection.query(`SELECT * FROM users`, []);
+
+    return users.map((user: any) => User.restore({ ...user, user_animals: user.user_animals.split(',') }));
   }
 
   async create(input: User): Promise<User> {

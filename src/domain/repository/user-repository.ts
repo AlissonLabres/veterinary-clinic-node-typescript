@@ -6,4 +6,6 @@ export default interface UserRepository {
 
   getUsers(): Promise<User[]>;
 
+  getUserById(id: number): Promise<User>;
+
 }

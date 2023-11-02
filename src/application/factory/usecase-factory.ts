@@ -17,7 +17,7 @@ export default class UsecaseFactory {
     private readonly userRepository: UserRepository
   ) { }
 
-  createScheduleAppointment: CreateScheduleAppointment = new CreateScheduleAppointment(this.scheduleRepository, this.medicalRepository);
+  createScheduleAppointment: CreateScheduleAppointment = new CreateScheduleAppointment(this.scheduleRepository, this.medicalRepository, this.userRepository);
   createScheduleUrgent: CreateScheduleUrgent = new CreateScheduleUrgent(this.scheduleRepository, this.medicalRepository);
   cancelScheduleAppointment: CancelScheduleAppointment = new CancelScheduleAppointment(this.scheduleRepository);
   getBullets: GetBullets = new GetBullets(this.scheduleRepository);

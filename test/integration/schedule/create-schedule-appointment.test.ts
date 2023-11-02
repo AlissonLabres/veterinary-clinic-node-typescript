@@ -1,3 +1,4 @@
+import User from "../../../src/domain/entity/user";
 import MedicalBusyException from "../../../src/domain/exception/medical-busy-exception";
 import MedicalException from "../../../src/domain/exception/medical-exception";
 import TimeOrDateException from "../../../src/domain/exception/time-or-date-exception";
@@ -7,14 +8,24 @@ import ScheduleAppointmentOutput from "../../../src/domain/usecase/schedule/crea
 import MemoryConnection from "../../../src/infrastructure/repository/database/memory-connection";
 import MedicalRepositoryMemory from "../../../src/infrastructure/repository/medical/medica-repository-memory";
 import ScheduleRepositoryMemory from "../../../src/infrastructure/repository/schedule/schedule-repository-memory"
+import UserRepositoryMemory from "../../../src/infrastructure/repository/user/user-repository-memory";
 
 test('Should create usecase schedule appointment', async () => {
   const memoryConnection = new MemoryConnection();
+  const userRepository = new UserRepositoryMemory(memoryConnection);
+  const { user_id } = await userRepository.create(
+    User.create({
+      user_name: 'Name Testing',
+      user_email: 'email@testing.com.br',
+      user_phone: '(41) 98888-2222'
+    })
+  );
+
   const medicalRepository = new MedicalRepositoryMemory(memoryConnection);
   const scheduleRepository = new ScheduleRepositoryMemory(memoryConnection);
-  const useCase = new CreateScheduleAppointment(scheduleRepository, medicalRepository);
+  const useCase = new CreateScheduleAppointment(scheduleRepository, medicalRepository, userRepository);
   const input: ScheduleAppointmentInput = {
-    user_id: 1,
+    user_id: user_id!,
     medical_id: 1,
     animal_id: 1,
     bullet_code: '2023-08-08T16:00'
@@ -29,11 +40,20 @@ test('Should create usecase schedule appointment', async () => {
 
 test('Don`t should create usecase schedule appointment with bullet not available', async () => {
   const memoryConnection = new MemoryConnection();
+  const userRepository = new UserRepositoryMemory(memoryConnection);
+  const { user_id } = await userRepository.create(
+    User.create({
+      user_name: 'Name Testing',
+      user_email: 'email@testing.com.br',
+      user_phone: '(41) 98888-2222'
+    })
+  );
+
   const medicalRepository = new MedicalRepositoryMemory(memoryConnection);
   const scheduleRepository = new ScheduleRepositoryMemory(memoryConnection);
-  const useCase = new CreateScheduleAppointment(scheduleRepository, medicalRepository);
+  const useCase = new CreateScheduleAppointment(scheduleRepository, medicalRepository, userRepository);
   const input: ScheduleAppointmentInput = {
-    user_id: 1,
+    user_id: user_id!,
     medical_id: 1,
     animal_id: 1,
     bullet_code: '2023-08-08T18:00'
@@ -46,11 +66,20 @@ test('Don`t should create usecase schedule appointment with bullet not available
 
 test('Don`t should create usecase schedule appointment with medical inexistent', async () => {
   const memoryConnection = new MemoryConnection();
+  const userRepository = new UserRepositoryMemory(memoryConnection);
+  const { user_id } = await userRepository.create(
+    User.create({
+      user_name: 'Name Testing',
+      user_email: 'email@testing.com.br',
+      user_phone: '(41) 98888-2222'
+    })
+  );
+
   const medicalRepository = new MedicalRepositoryMemory(memoryConnection);
   const scheduleRepository = new ScheduleRepositoryMemory(memoryConnection);
-  const useCase = new CreateScheduleAppointment(scheduleRepository, medicalRepository);
+  const useCase = new CreateScheduleAppointment(scheduleRepository, medicalRepository, userRepository);
   const input: ScheduleAppointmentInput = {
-    user_id: 1,
+    user_id: user_id!,
     medical_id: 2,
     animal_id: 1,
     bullet_code: '2023-08-08T16:00'
@@ -63,12 +92,20 @@ test('Don`t should create usecase schedule appointment with medical inexistent',
 
 test('Don`t should create second usecase schedule appointment with medical equals', async () => {
   const memoryConnection = new MemoryConnection();
+  const userRepository = new UserRepositoryMemory(memoryConnection);
+  const { user_id } = await userRepository.create(
+    User.create({
+      user_name: 'Name Testing',
+      user_email: 'email@testing.com.br',
+      user_phone: '(41) 98888-2222'
+    })
+  );
+
   const medicalRepository = new MedicalRepositoryMemory(memoryConnection);
   const scheduleRepository = new ScheduleRepositoryMemory(memoryConnection);
-
-  const useCase = new CreateScheduleAppointment(scheduleRepository, medicalRepository);
+  const useCase = new CreateScheduleAppointment(scheduleRepository, medicalRepository, userRepository);
   const input: ScheduleAppointmentInput = {
-    user_id: 1,
+    user_id: user_id!,
     medical_id: 1,
     animal_id: 1,
     bullet_code: '2023-08-08T16:00'

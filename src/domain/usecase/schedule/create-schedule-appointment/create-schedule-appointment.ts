@@ -1,9 +1,11 @@
 import Bullet from "../../../entity/bullet";
 import Medical from "../../../entity/medical";
 import Schedule from "../../../entity/schedule";
+import User from "../../../entity/user";
 import MedicalBusyException from "../../../exception/medical-busy-exception";
 import MedicalRepository from "../../../repository/medical-repository";
 import ScheduleRepository from "../../../repository/schedule-repository";
+import UserRepository from "../../../repository/user-repository";
 import ScheduleAppointmentInput from "./schedule-appointment-input";
 import ScheduleAppointmentOutput from "./schedule-appointment-output";
 
@@ -11,10 +13,12 @@ export default class CreateScheduleAppointment {
 
   constructor(
     private readonly scheduleRepository: ScheduleRepository,
-    private readonly medicalRepository: MedicalRepository
+    private readonly medicalRepository: MedicalRepository,
+    private readonly userRepository: UserRepository
   ) { }
 
   async execute(input: ScheduleAppointmentInput): Promise<ScheduleAppointmentOutput> {
+    const user: User = await this.userRepository.getUserById(input.user_id);
     const bullet: Bullet = await this.scheduleRepository.getBulletByCode(input.bullet_code);
     const medical: Medical = await this.medicalRepository.getMedicalById(input.medical_id);
 
@@ -23,7 +27,7 @@ export default class CreateScheduleAppointment {
       throw new MedicalBusyException();
     }
 
-    const schedule = Schedule.create(input.user_id, medical.medical_id!, input.animal_id, bullet.bullet_id);
+    const schedule = Schedule.create(user.user_id!, medical.medical_id!, input.animal_id, bullet.bullet_id);
     const id_schedule: number = await this.scheduleRepository.createSchedule(schedule);
 
     return {
