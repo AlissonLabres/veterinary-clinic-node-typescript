@@ -2,6 +2,7 @@ import User from "../../../src/domain/entity/user";
 import MedicalBusyException from "../../../src/domain/exception/medical-busy-exception";
 import MedicalException from "../../../src/domain/exception/medical-exception";
 import TimeOrDateException from "../../../src/domain/exception/time-or-date-exception";
+import UserException from "../../../src/domain/exception/user-exception";
 import CreateScheduleAppointment from "../../../src/domain/usecase/schedule/create-schedule-appointment/create-schedule-appointment"
 import ScheduleAppointmentInput from "../../../src/domain/usecase/schedule/create-schedule-appointment/schedule-appointment-input";
 import ScheduleAppointmentOutput from "../../../src/domain/usecase/schedule/create-schedule-appointment/schedule-appointment-output";
@@ -86,4 +87,17 @@ describe('Test integration create schedule appointment', () => {
     await expect(() => usecase.execute(input)).rejects.toEqual(exception);
     await expect(() => usecase.execute(input)).rejects.toBeInstanceOf(MedicalBusyException);
   })
+
+  test('Don`t should create usecase schedule appointment with user inexistent', async () => {
+    const input: ScheduleAppointmentInput = {
+      user_id: 999,
+      medical_id: 1,
+      animal_id: 1,
+      bullet_code: '2023-08-08T16:00'
+    };
+
+    const exception = { name: 'USER_EXCEPTION', message: 'User is invalid', status: 400 };
+    await expect(() => usecase.execute(input)).rejects.toEqual(exception);
+    await expect(() => usecase.execute(input)).rejects.toBeInstanceOf(UserException);
+  });
 });

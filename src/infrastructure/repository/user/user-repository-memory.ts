@@ -2,6 +2,7 @@ import crypto from "crypto";
 import User from "../../../domain/entity/user";
 import UserRepository from "../../../domain/repository/user-repository";
 import MemoryConnection from "../database/memory-connection";
+import UserException from "../../../domain/exception/user-exception";
 
 export default class UserRepositoryMemory implements UserRepository {
 
@@ -10,18 +11,8 @@ export default class UserRepositoryMemory implements UserRepository {
   getUserById(id: number): Promise<User> {
     const user = this.memoryConnection.users.find(user => user.user_id === id);
 
-    if (!user) {
-      return Promise.reject(new Error('User not found'));
-    }
-
     return Promise.resolve(
-      User.restore({
-        user_id: user.user_id,
-        user_name: user.user_name,
-        user_email: user.user_email,
-        user_phone: user.user_phone,
-        user_animals: user.user_animals.split(',')
-      })
+      User.restore({ ...user, user_animals: user?.user_animals.split(',') })
     );
   }
   

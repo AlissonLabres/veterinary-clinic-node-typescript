@@ -1,6 +1,7 @@
 import User from "../../../src/domain/entity/user";
 import MedicalException from "../../../src/domain/exception/medical-exception";
 import TimeOrDateException from "../../../src/domain/exception/time-or-date-exception";
+import UserException from "../../../src/domain/exception/user-exception";
 import CreateScheduleUrgent from "../../../src/domain/usecase/schedule/create-schedule-urgent/create-schedule-urgent";
 import ScheduleUrgentInput from "../../../src/domain/usecase/schedule/create-schedule-urgent/schedule-urgent-input";
 import ScheduleUrgentOutput from "../../../src/domain/usecase/schedule/create-schedule-urgent/schedule-urgent-output";
@@ -69,5 +70,17 @@ describe('Test integration create schedule urgent', () => {
     const exception = { name: 'MEDICAL_EXCEPTION', message: 'Medical not found', status: 404 };
     await expect(() => usecase.execute(input)).rejects.toEqual(exception);
     await expect(() => usecase.execute(input)).rejects.toBeInstanceOf(MedicalException);
+  })
+  
+  test('Don`t should create usecase schedule urgent without user create', async () => {
+    const input: ScheduleUrgentInput = {
+      user_id: 999,
+      animal_id: 1,
+      urgency_date: '2023-08-05T10:00'
+    };
+  
+    const exception = { name: 'USER_EXCEPTION', message: 'User is invalid', status: 400 };
+    await expect(() => usecase.execute(input)).rejects.toEqual(exception);
+    await expect(() => usecase.execute(input)).rejects.toBeInstanceOf(UserException);
   })
 });
