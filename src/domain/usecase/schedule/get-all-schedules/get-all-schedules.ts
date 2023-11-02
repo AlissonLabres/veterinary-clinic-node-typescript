@@ -1,4 +1,4 @@
-import ScheduleRepository from "../../repository/schedule-repository";
+import ScheduleRepository from "../../../repository/schedule-repository";
 import AllScheduleOutput from "./all-schedule-output";
 
 export default class GetAllSchedules {

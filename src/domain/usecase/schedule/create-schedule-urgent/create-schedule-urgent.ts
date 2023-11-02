@@ -1,9 +1,9 @@
-import Bullet from "../../entity/bullet";
-import Medical from "../../entity/medical";
-import Schedule from "../../entity/schedule";
-import MedicalBusyException from "../../exception/medical-busy-exception";
-import MedicalRepository from "../../repository/medical-repository";
-import ScheduleRepository from "../../repository/schedule-repository";
+import Bullet from "../../../entity/bullet";
+import Medical from "../../../entity/medical";
+import Schedule from "../../../entity/schedule";
+import MedicalBusyException from "../../../exception/medical-busy-exception";
+import MedicalRepository from "../../../repository/medical-repository";
+import ScheduleRepository from "../../../repository/schedule-repository";
 import ScheduleUrgentInput from "./schedule-urgent-input";
 import ScheduleUrgentOutput from "./schedule-urgent-output";
 

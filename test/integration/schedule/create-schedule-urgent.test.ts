@@ -1,11 +1,11 @@
-import MedicalException from "../../src/domain/exception/medical-exception";
-import TimeOrDateException from "../../src/domain/exception/time-or-date-exception";
-import CreateScheduleUrgent from "../../src/domain/usecase/create-schedule-urgent/create-schedule-urgent";
-import ScheduleUrgentInput from "../../src/domain/usecase/create-schedule-urgent/schedule-urgent-input";
-import ScheduleUrgentOutput from "../../src/domain/usecase/create-schedule-urgent/schedule-urgent-output";
-import MemoryConnection from "../../src/infrastructure/repository/database/memory-connection";
-import MedicalRepositoryMemory from "../../src/infrastructure/repository/medica-repository-memory";
-import ScheduleRepositoryMemory from "../../src/infrastructure/repository/schedule-repository-memory";
+import MedicalException from "../../../src/domain/exception/medical-exception";
+import TimeOrDateException from "../../../src/domain/exception/time-or-date-exception";
+import CreateScheduleUrgent from "../../../src/domain/usecase/schedule/create-schedule-urgent/create-schedule-urgent";
+import ScheduleUrgentInput from "../../../src/domain/usecase/schedule/create-schedule-urgent/schedule-urgent-input";
+import ScheduleUrgentOutput from "../../../src/domain/usecase/schedule/create-schedule-urgent/schedule-urgent-output";
+import MemoryConnection from "../../../src/infrastructure/repository/database/memory-connection";
+import MedicalRepositoryMemory from "../../../src/infrastructure/repository/medical/medica-repository-memory";
+import ScheduleRepositoryMemory from "../../../src/infrastructure/repository/schedule/schedule-repository-memory";
 
 test('Should create usecase schedule urgent', async () => {
   const memoryConnection = new MemoryConnection();

@@ -1,7 +1,7 @@
-import Medical from "../../domain/entity/medical";
-import TimeOrDateException from "../../domain/exception/time-or-date-exception";
-import MedicalRepository from "../../domain/repository/medical-repository";
-import MemoryConnection from "./database/memory-connection";
+import Medical from "../../../domain/entity/medical";
+import TimeOrDateException from "../../../domain/exception/time-or-date-exception";
+import MedicalRepository from "../../../domain/repository/medical-repository";
+import MemoryConnection from "../database/memory-connection";
 
 export default class MedicalRepositoryMemory implements MedicalRepository {
 

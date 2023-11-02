@@ -1,9 +1,9 @@
-import CreateScheduleAppointment from "../../src/domain/usecase/create-schedule-appointment/create-schedule-appointment"
-import AllScheduleOutput from "../../src/domain/usecase/get-all-schedules/all-schedule-output";
-import GetAllSchedules from "../../src/domain/usecase/get-all-schedules/get-all-schedules";
-import MemoryConnection from "../../src/infrastructure/repository/database/memory-connection";
-import MedicalRepositoryMemory from "../../src/infrastructure/repository/medica-repository-memory";
-import ScheduleRepositoryMemory from "../../src/infrastructure/repository/schedule-repository-memory"
+import CreateScheduleAppointment from "../../../src/domain/usecase/schedule/create-schedule-appointment/create-schedule-appointment"
+import AllScheduleOutput from "../../../src/domain/usecase/schedule/get-all-schedules/all-schedule-output";
+import GetAllSchedules from "../../../src/domain/usecase/schedule/get-all-schedules/get-all-schedules";
+import MemoryConnection from "../../../src/infrastructure/repository/database/memory-connection";
+import MedicalRepositoryMemory from "../../../src/infrastructure/repository/medical/medica-repository-memory";
+import ScheduleRepositoryMemory from "../../../src/infrastructure/repository/schedule/schedule-repository-memory"
 
 test('Should empty list when execute usecase GetAllSchedules', async () => {
   const repository = new ScheduleRepositoryMemory(new MemoryConnection());

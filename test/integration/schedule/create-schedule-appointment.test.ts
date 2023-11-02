@@ -1,12 +1,12 @@
-import MedicalBusyException from "../../src/domain/exception/medical-busy-exception";
-import MedicalException from "../../src/domain/exception/medical-exception";
-import TimeOrDateException from "../../src/domain/exception/time-or-date-exception";
-import CreateScheduleAppointment from "../../src/domain/usecase/create-schedule-appointment/create-schedule-appointment"
-import ScheduleAppointmentInput from "../../src/domain/usecase/create-schedule-appointment/schedule-appointment-input";
-import ScheduleAppointmentOutput from "../../src/domain/usecase/create-schedule-appointment/schedule-appointment-output";
-import MemoryConnection from "../../src/infrastructure/repository/database/memory-connection";
-import MedicalRepositoryMemory from "../../src/infrastructure/repository/medica-repository-memory";
-import ScheduleRepositoryMemory from "../../src/infrastructure/repository/schedule-repository-memory"
+import MedicalBusyException from "../../../src/domain/exception/medical-busy-exception";
+import MedicalException from "../../../src/domain/exception/medical-exception";
+import TimeOrDateException from "../../../src/domain/exception/time-or-date-exception";
+import CreateScheduleAppointment from "../../../src/domain/usecase/schedule/create-schedule-appointment/create-schedule-appointment"
+import ScheduleAppointmentInput from "../../../src/domain/usecase/schedule/create-schedule-appointment/schedule-appointment-input";
+import ScheduleAppointmentOutput from "../../../src/domain/usecase/schedule/create-schedule-appointment/schedule-appointment-output";
+import MemoryConnection from "../../../src/infrastructure/repository/database/memory-connection";
+import MedicalRepositoryMemory from "../../../src/infrastructure/repository/medical/medica-repository-memory";
+import ScheduleRepositoryMemory from "../../../src/infrastructure/repository/schedule/schedule-repository-memory"
 
 test('Should create usecase schedule appointment', async () => {
   const memoryConnection = new MemoryConnection();

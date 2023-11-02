@@ -1,6 +1,6 @@
-import Medical from "../../domain/entity/medical";
-import MedicalRepository from "../../domain/repository/medical-repository";
-import DatabaseConnection from "./database/database-connection";
+import Medical from "../../../domain/entity/medical";
+import MedicalRepository from "../../../domain/repository/medical-repository";
+import DatabaseConnection from "../database/database-connection";
 
 export default class MedicalRepositoryDatabase implements MedicalRepository {
 

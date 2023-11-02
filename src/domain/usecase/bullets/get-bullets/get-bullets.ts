@@ -1,5 +1,5 @@
-import Bullet from "../../entity/bullet";
-import ScheduleRepository from "../../repository/schedule-repository";
+import Bullet from "../../../entity/bullet";
+import ScheduleRepository from "../../../repository/schedule-repository";
 import BulletOutput from "./get-bullet-output";
 
 export default class GetBullets {

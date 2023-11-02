@@ -1,5 +1,5 @@
-import Schedule from "../../entity/schedule";
-import ScheduleRepository from "../../repository/schedule-repository";
+import Schedule from "../../../entity/schedule";
+import ScheduleRepository from "../../../repository/schedule-repository";
 
 export default class CancelScheduleAppointment {
 

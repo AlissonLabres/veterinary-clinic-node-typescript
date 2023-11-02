@@ -1,5 +1,5 @@
-import Medical from "../../entity/medical";
-import MedicalRepository from "../../repository/medical-repository";
+import Medical from "../../../entity/medical";
+import MedicalRepository from "../../../repository/medical-repository";
 import MedicalOutput from "./medical-output";
 
 export default class getMedicalsBySpeciality {

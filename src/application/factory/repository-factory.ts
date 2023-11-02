@@ -5,10 +5,10 @@ import MemoryConnection from "../../infrastructure/repository/database/memory-co
 import memoryConnection from "../../infrastructure/repository/database/memory-connection";
 import PostgresConnection from "../../infrastructure/repository/database/postgres-connection";
 import postgresConnection from "../../infrastructure/repository/database/postgres-connection";
-import MedicalRepositoryMemory from "../../infrastructure/repository/medica-repository-memory";
-import MedicalRepositoryDatabase from "../../infrastructure/repository/medical-repository-database";
-import ScheduleRepositoryDatabase from "../../infrastructure/repository/schedule-repository-database";
-import ScheduleRepositoryMemory from "../../infrastructure/repository/schedule-repository-memory";
+import MedicalRepositoryMemory from "../../infrastructure/repository/medical/medica-repository-memory";
+import MedicalRepositoryDatabase from "../../infrastructure/repository/medical/medical-repository-database";
+import ScheduleRepositoryDatabase from "../../infrastructure/repository/schedule/schedule-repository-database";
+import ScheduleRepositoryMemory from "../../infrastructure/repository/schedule/schedule-repository-memory";
 import UserRepositoryDatabase from "../../infrastructure/repository/user/user-repository-database";
 import UserRepositoryMemory from "../../infrastructure/repository/user/user-repository-memory";
 

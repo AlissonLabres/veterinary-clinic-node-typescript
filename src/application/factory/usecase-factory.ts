@@ -1,13 +1,13 @@
 import MedicalRepository from "../../domain/repository/medical-repository";
 import ScheduleRepository from "../../domain/repository/schedule-repository";
 import UserRepository from "../../domain/repository/user-repository";
-import CancelScheduleAppointment from "../../domain/usecase/cancel-schedule-appointment/cancel-schedule-appoitment";
-import CreateScheduleAppointment from "../../domain/usecase/create-schedule-appointment/create-schedule-appointment";
-import CreateScheduleUrgent from "../../domain/usecase/create-schedule-urgent/create-schedule-urgent";
+import CancelScheduleAppointment from "../../domain/usecase/schedule/cancel-schedule-appointment/cancel-schedule-appoitment";
+import CreateScheduleAppointment from "../../domain/usecase/schedule/create-schedule-appointment/create-schedule-appointment";
+import CreateScheduleUrgent from "../../domain/usecase/schedule/create-schedule-urgent/create-schedule-urgent";
 import CreateUser from "../../domain/usecase/user/create-user/create-user";
-import GetAllSchedules from "../../domain/usecase/get-all-schedules/get-all-schedules";
-import GetBullets from "../../domain/usecase/get-bullets/get-bullets";
-import getMedicalsBySpeciality from "../../domain/usecase/get-medical-by-speciality/get-medical-by-speciality";
+import GetAllSchedules from "../../domain/usecase/schedule/get-all-schedules/get-all-schedules";
+import GetBullets from "../../domain/usecase/bullets/get-bullets/get-bullets";
+import getMedicalsBySpeciality from "../../domain/usecase/medicals/get-medical-by-speciality/get-medical-by-speciality";
 
 export default class UsecaseFactory {
 

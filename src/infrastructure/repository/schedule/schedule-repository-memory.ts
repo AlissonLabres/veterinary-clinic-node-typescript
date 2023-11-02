@@ -1,8 +1,8 @@
 import crypto from "crypto";
-import Schedule from "../../domain/entity/schedule";
-import ScheduleRepository from "../../domain/repository/schedule-repository";
-import Bullet from "../../domain/entity/bullet";
-import MemoryConnection from "./database/memory-connection";
+import Schedule from "../../../domain/entity/schedule";
+import ScheduleRepository from "../../../domain/repository/schedule-repository";
+import Bullet from "../../../domain/entity/bullet";
+import MemoryConnection from "../database/memory-connection";
 
 export default class ScheduleRepositoryMemory implements ScheduleRepository {
 

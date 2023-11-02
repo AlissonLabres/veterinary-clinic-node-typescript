@@ -1,9 +1,9 @@
-import Schedule from "../../src/domain/entity/schedule";
-import ScheduleException from "../../src/domain/exception/schedule-exception";
-import CancelScheduleAppointment from "../../src/domain/usecase/cancel-schedule-appointment/cancel-schedule-appoitment";
-import MemoryConnection from "../../src/infrastructure/repository/database/memory-connection";
+import Schedule from "../../../src/domain/entity/schedule";
+import ScheduleException from "../../../src/domain/exception/schedule-exception";
+import CancelScheduleAppointment from "../../../src/domain/usecase/schedule/cancel-schedule-appointment/cancel-schedule-appoitment";
+import MemoryConnection from "../../../src/infrastructure/repository/database/memory-connection";
 
-import ScheduleRepositoryMemory from "../../src/infrastructure/repository/schedule-repository-memory";
+import ScheduleRepositoryMemory from "../../../src/infrastructure/repository/schedule/schedule-repository-memory";
 
 test('Should cancel usecase schedule appointment', async () => {
   const repository = new ScheduleRepositoryMemory(new MemoryConnection());
