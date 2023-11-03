@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS schedule, bullet, medical, users CASCADE;
+DROP TABLE IF EXISTS schedule, bullet, medical, users, animal CASCADE;
 
 CREATE TABLE IF NOT EXISTS bullet (
     bullet_id SERIAL primary key,
@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS medical (
 CREATE TABLE IF NOT EXISTS schedule (
     schedule_id SERIAL primary key,
     schedule_status varchar(255) not null,
-    animal_id integer not null,
     type_service varchar(255) not null,
+    animal_id integer,
     user_id integer,
     medical_id integer,
     bullet_id integer
@@ -30,6 +30,15 @@ CREATE TABLE IF NOT EXISTS users (
     user_email varchar(255) not null,
     user_phone varchar(255) not null,
     user_animals varchar(255)
+);
+
+CREATE TABLE IF NOT EXISTS animal (
+    animal_id SERIAL primary key,
+    animal_name varchar(255) not null,
+    animal_breed varchar(255) not null,
+    animal_age integer not null,
+    animal_weight integer not null,
+    animal_type varchar(255) not null
 );
 
 ALTER TABLE bullet
@@ -51,3 +60,8 @@ ALTER TABLE schedule
 ADD CONSTRAINT fk_users 
 FOREIGN KEY(user_id) 
 REFERENCES users(user_id);
+
+ALTER TABLE schedule
+ADD CONSTRAINT fk_animal
+FOREIGN KEY(animal_id)
+REFERENCES animal(animal_id);
