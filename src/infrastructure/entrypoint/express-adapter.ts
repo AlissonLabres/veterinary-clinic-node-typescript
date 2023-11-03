@@ -20,6 +20,7 @@ export default class ExpressAdapter implements HttpAdapter {
         const output = await execute(request.body, request.params);
         response.status(status).json(output);
       } catch (error: any) {
+        console.trace(error);
         const message = { name: error.name, message: error.message, status: error.status || 500 };
         response.status(message.status).json(message) 
       }

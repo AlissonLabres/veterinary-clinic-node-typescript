@@ -18,7 +18,7 @@ export const SwaggerConfig = (application: any) => {
       }
     ],
     baseDir: __dirname,
-    filesPattern: ['./**/*.ts', './*.ts'],
+    filesPattern: ['../application/controller/**/*.ts'],
     swaggerUIPath: '/swagger-ui',
     exposeSwaggerUI: true,
     exposeApiDocs: true,
