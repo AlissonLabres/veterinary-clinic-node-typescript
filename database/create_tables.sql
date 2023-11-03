@@ -28,8 +28,7 @@ CREATE TABLE IF NOT EXISTS users (
     user_id SERIAL primary key,
     user_name varchar(255) not null,
     user_email varchar(255) not null,
-    user_phone varchar(255) not null,
-    user_animals varchar(255)
+    user_phone varchar(255) not null
 );
 
 CREATE TABLE IF NOT EXISTS animal (
@@ -38,7 +37,8 @@ CREATE TABLE IF NOT EXISTS animal (
     animal_breed varchar(255) not null,
     animal_age integer not null,
     animal_weight integer not null,
-    animal_type varchar(255) not null
+    animal_type varchar(255) not null,
+    user_id integer
 );
 
 ALTER TABLE bullet
@@ -65,3 +65,8 @@ ALTER TABLE schedule
 ADD CONSTRAINT fk_animal
 FOREIGN KEY(animal_id)
 REFERENCES animal(animal_id);
+
+ALTER TABLE animal
+ADD CONSTRAINT fk_users
+FOREIGN KEY(user_id)
+REFERENCES users(user_id);
