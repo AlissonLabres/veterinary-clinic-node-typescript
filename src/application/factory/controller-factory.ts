@@ -1,3 +1,4 @@
+import AnimalController from "../controller/animal-controller";
 import BulletController from "../controller/bullet-controller";
 import MedicalController from "../controller/medical-controller";
 import ScheduleController from "../controller/schedule-controller";
@@ -17,5 +18,6 @@ export default class ControllerFactory {
     new BulletController(this.httpAdapter, this.usecaseFactory);
     new MedicalController(this.httpAdapter, this.usecaseFactory);
     new UserController(this.httpAdapter, this.usecaseFactory);
+    new AnimalController(this.httpAdapter, this.usecaseFactory);
   }
 }

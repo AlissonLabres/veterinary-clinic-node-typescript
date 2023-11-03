@@ -8,6 +8,8 @@ import CreateUser from "../../domain/usecase/user/create-user/create-user";
 import GetAllSchedules from "../../domain/usecase/schedule/get-all-schedules/get-all-schedules";
 import GetBullets from "../../domain/usecase/bullets/get-bullets/get-bullets";
 import getMedicalsBySpeciality from "../../domain/usecase/medical/get-medical-by-speciality/get-medical-by-speciality";
+import GetUsers from "../../domain/usecase/user/get-all-users/get-users";
+import CreateAnimal from "../../domain/usecase/animal/create-animal/create-animal";
 
 export default class UsecaseFactory {
 
@@ -26,4 +28,7 @@ export default class UsecaseFactory {
   getMedicalsBySpeciality: getMedicalsBySpeciality = new getMedicalsBySpeciality(this.medicalRepository);
   
   createUser: CreateUser = new CreateUser(this.userRepository);
+  getUsers: GetUsers = new GetUsers(this.userRepository);
+
+  createAnimal: CreateAnimal = new CreateAnimal(this.userRepository);
 }
