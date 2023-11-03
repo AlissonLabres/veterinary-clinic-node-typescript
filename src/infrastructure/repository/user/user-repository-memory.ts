@@ -4,6 +4,7 @@ import UserRepository from "../../../domain/repository/user-repository";
 import MemoryConnection from "../database/memory-connection";
 import UserException from "../../../domain/exception/user-exception";
 import Animal from "../../../domain/entity/animal";
+import AnimalException from "../../../domain/exception/animal-exception";
 
 export default class UserRepositoryMemory implements UserRepository {
 
@@ -36,6 +37,21 @@ export default class UserRepositoryMemory implements UserRepository {
         animal_weight: animal.animal_weight,
         animal_type: animal.animal_type.value,
         animal_breed: animal.animal_breed
+      })
+    );
+  }
+
+  getUserAndAnimalsById(user_id: number, animal_id: number): Promise<User> {
+    const user = this.memoryConnection.users.find(user => user.user_id === user_id);
+    const animal = this.memoryConnection.animals.find(animal => animal.animal_id === animal_id);
+
+    return Promise.resolve(
+      User.restore({
+        user_id: user?.user_id,
+        user_name: user?.user_name,
+        user_email: user?.user_email,
+        user_phone: user?.user_phone,
+        user_animals: [animal?.animal_id]
       })
     );
   }

@@ -1,4 +1,6 @@
+import Animal from "../../../src/domain/entity/animal";
 import User from "../../../src/domain/entity/user";
+import AnimalException from "../../../src/domain/exception/animal-exception";
 import MedicalException from "../../../src/domain/exception/medical-exception";
 import TimeOrDateException from "../../../src/domain/exception/time-or-date-exception";
 import UserException from "../../../src/domain/exception/user-exception";
@@ -13,6 +15,7 @@ import UserRepositoryMemory from "../../../src/infrastructure/repository/user/us
 describe('Test integration create schedule urgent', () => {
   let usecase: CreateScheduleUrgent;
   let user_id: number;
+  let animal_id: number;
 
   beforeEach(async () => {
     const memoryConnection = new MemoryConnection();
@@ -25,16 +28,28 @@ describe('Test integration create schedule urgent', () => {
       })
     );
 
+    const animal = await userRepository.createAnimal(
+      user.user_id!,
+      Animal.create({
+        animal_name: 'Animal Name',
+        animal_age: 10,
+        animal_weight: 10,
+        animal_type: 'DOG',
+        animal_breed: 'Breed'
+      })
+    );
+
     const medicalRepository = new MedicalRepositoryMemory(memoryConnection);
     const scheduleRepository = new ScheduleRepositoryMemory(memoryConnection);
     usecase = new CreateScheduleUrgent(scheduleRepository, medicalRepository, userRepository);
     user_id = user.user_id!;
+    animal_id = animal.animal_id!;
   });
   
   test('Should create usecase schedule urgent', async () => {
     const input: ScheduleUrgentInput = {
       user_id,
-      animal_id: 1,
+      animal_id,
       urgency_date: '2023-08-05T10:00'
     };
   
@@ -49,7 +64,7 @@ describe('Test integration create schedule urgent', () => {
   test('Don`t should create usecase schedule urgent with bullet not available', async () => {
     const input: ScheduleUrgentInput = {
       user_id,
-      animal_id: 1,
+      animal_id,
       urgency_date: '2023-10-08T18:00'
     };
   
@@ -61,7 +76,7 @@ describe('Test integration create schedule urgent', () => {
   test('Don`t should create usecase schedule urgent without medical available', async () => {
     const input: ScheduleUrgentInput = {
       user_id,
-      animal_id: 1,
+      animal_id,
       urgency_date: '2023-08-05T10:00'
     };
   
@@ -75,12 +90,24 @@ describe('Test integration create schedule urgent', () => {
   test('Don`t should create usecase schedule urgent without user create', async () => {
     const input: ScheduleUrgentInput = {
       user_id: 999,
-      animal_id: 1,
+      animal_id,
       urgency_date: '2023-08-05T10:00'
     };
   
     const exception = { name: 'USER_EXCEPTION', message: 'User is invalid', status: 400 };
     await expect(() => usecase.execute(input)).rejects.toEqual(exception);
     await expect(() => usecase.execute(input)).rejects.toBeInstanceOf(UserException);
+  })
+
+  test('Don`t should create usecase schedule urgent without animal create', async () => {
+    const input: ScheduleUrgentInput = {
+      user_id,
+      animal_id: 999,
+      urgency_date: '2023-08-05T10:00'
+    };
+  
+    const exception = { name: 'ANIMAL_EXCEPTION', message: "Animal doesn't belong to the user", status: 404 };
+    await expect(() => usecase.execute(input)).rejects.toEqual(exception);
+    await expect(() => usecase.execute(input)).rejects.toBeInstanceOf(AnimalException);
   })
 });

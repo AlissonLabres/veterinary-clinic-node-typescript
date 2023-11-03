@@ -2,7 +2,7 @@ import Bullet from "../../../entity/bullet";
 import Medical from "../../../entity/medical";
 import Schedule from "../../../entity/schedule";
 import User from "../../../entity/user";
-import MedicalBusyException from "../../../exception/medical-busy-exception";
+import AnimalException from "../../../exception/animal-exception";
 import MedicalRepository from "../../../repository/medical-repository";
 import ScheduleRepository from "../../../repository/schedule-repository";
 import UserRepository from "../../../repository/user-repository";
@@ -18,7 +18,11 @@ export default class CreateScheduleUrgent {
   ) { }
 
   async execute(input: ScheduleUrgentInput): Promise<ScheduleUrgentOutput> {
-    const user: User = await this.userRepository.getUserById(input.user_id);
+    const user: User = await this.userRepository.getUserAndAnimalsById(input.user_id, input.animal_id);
+    if (!user.user_animals.includes(input.animal_id)) {
+      throw new AnimalException("Animal doesn't belong to the user");
+    }
+
     const bullet: Bullet = await this.scheduleRepository.getNearestBullet(input.urgency_date);
     const medical: Medical = await this.medicalRepository.availableUrgentTo(bullet.bullet_code);
     const schedule = Schedule.create(user.user_id!, medical.medical_id!, input.animal_id, bullet.bullet_id, 'URGENT');

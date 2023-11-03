@@ -23,6 +23,23 @@ export default class UserRepositoryDatabase implements UserRepository {
     });
   }
 
+  async getUserAndAnimalsById(user_id: number, animal_id: number): Promise<User> {
+    const [user] = await this.databaseConnection.query(`
+      SELECT users.*, animal.animal_id FROM users 
+      LEFT JOIN animal ON animal.user_id = users.user_id
+      WHERE user_id = $1
+      AND animal_id = $2
+    `, [user_id, animal_id]);
+
+    return User.restore({
+      user_id: user.user_id,
+      user_name: user.user_name,
+      user_email: user.user_email,
+      user_phone: user.user_phone,
+      user_animals: [user.animal_id]
+    });
+  }
+
   async getUserById(id: number): Promise<User> {
     const [user] = await this.databaseConnection.query(`SELECT * FROM users WHERE user_id = $1`, [id]);
 

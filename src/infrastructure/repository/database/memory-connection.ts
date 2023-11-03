@@ -42,12 +42,13 @@ interface AnimalsMemory {
 export default class MemoryConnection {
   bullets: BulletMemory[] = [];
   schedules: ScheduleMemory[] = [];
-  medicals: MedicalMemory[];
+  medicals: MedicalMemory[] = [];
   users: UsersMemory[] = [];
   animals: AnimalsMemory[] = [];
 
   constructor() {
     this.users = [];
+    this.animals = [];
     this.schedules = [];
     this.bullets = [];
     this.bullets.push(

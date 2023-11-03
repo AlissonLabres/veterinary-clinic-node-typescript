@@ -9,6 +9,8 @@ export default interface UserRepository {
 
   getUserById(id: number): Promise<User>;
 
+  getUserAndAnimalsById(user_id: number, animal_id: number): Promise<User>;
+
   createAnimal(user_id: number, animal: Animal): Promise<Animal>;
 
 }
