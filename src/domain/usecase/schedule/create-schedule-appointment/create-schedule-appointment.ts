@@ -20,7 +20,7 @@ export default class CreateScheduleAppointment {
 
   async execute(input: ScheduleAppointmentInput): Promise<ScheduleAppointmentOutput> {
     const user: User = await this.userRepository.getUserAndAnimalsById(input.user_id, input.animal_id);
-    if (!user.user_animals.includes(input.animal_id)) {
+    if (!user.user_animals?.includes(input.animal_id)) {
       throw new AnimalException("Animal doesn't belong to the user");
     }
 

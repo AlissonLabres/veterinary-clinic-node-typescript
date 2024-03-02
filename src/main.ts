@@ -1,8 +1,9 @@
 import ExpressAdapter from './infrastructure/entrypoint/express-adapter';
 import UsecaseFactory from './application/factory/usecase-factory';
-import dotenv from 'dotenv';
 import RepositoryFactory from "./application/factory/repository-factory";
 import ControllerFactory from "./application/factory/controller-factory";
+
+import dotenv from 'dotenv';
 
 dotenv.config();
 

@@ -27,8 +27,8 @@ export default class UserRepositoryDatabase implements UserRepository {
     const [user] = await this.databaseConnection.query(`
       SELECT users.*, animal.animal_id FROM users 
       LEFT JOIN animal ON animal.user_id = users.user_id
-      WHERE user_id = $1
-      AND animal_id = $2
+      WHERE users.user_id = $1
+      AND animal.animal_id = $2
     `, [user_id, animal_id]);
 
     return User.restore({
