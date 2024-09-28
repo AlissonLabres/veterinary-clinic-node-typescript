@@ -7,28 +7,37 @@ import CreateScheduleUrgent from "../../domain/usecase/schedule/create-schedule-
 import CreateUser from "../../domain/usecase/user/create-user/create-user";
 import GetAllSchedules from "../../domain/usecase/schedule/get-all-schedules/get-all-schedules";
 import GetBullets from "../../domain/usecase/bullets/get-bullets/get-bullets";
-import getMedicalsBySpeciality from "../../domain/usecase/medical/get-medical-by-speciality/get-medical-by-speciality";
+import GetMedicalsBySpeciality from "../../domain/usecase/medical/get-medical-by-speciality/get-medical-by-speciality";
 import GetUsers from "../../domain/usecase/user/get-all-users/get-users";
 import CreateAnimal from "../../domain/usecase/animal/create-animal/create-animal";
+import GetAllAnimalsByUser from "../../domain/usecase/animal/get-all-animals-by-user/get-all-animals-by-user";
 
 export default class UsecaseFactory {
-
   constructor(
     private readonly scheduleRepository: ScheduleRepository,
     private readonly medicalRepository: MedicalRepository,
     private readonly userRepository: UserRepository
-  ) { }
+  ) {}
 
-  createScheduleAppointment: CreateScheduleAppointment = new CreateScheduleAppointment(this.scheduleRepository, this.medicalRepository, this.userRepository);
-  createScheduleUrgent: CreateScheduleUrgent = new CreateScheduleUrgent(this.scheduleRepository, this.medicalRepository, this.userRepository);
+  createScheduleAppointment: CreateScheduleAppointment = new CreateScheduleAppointment(
+    this.scheduleRepository,
+    this.medicalRepository,
+    this.userRepository
+  );
+  createScheduleUrgent: CreateScheduleUrgent = new CreateScheduleUrgent(
+    this.scheduleRepository,
+    this.medicalRepository,
+    this.userRepository
+  );
   cancelScheduleAppointment: CancelScheduleAppointment = new CancelScheduleAppointment(this.scheduleRepository);
   getBullets: GetBullets = new GetBullets(this.scheduleRepository);
   getAllSchedules: GetAllSchedules = new GetAllSchedules(this.scheduleRepository);
-  
-  getMedicalsBySpeciality: getMedicalsBySpeciality = new getMedicalsBySpeciality(this.medicalRepository);
-  
+
+  getMedicalsBySpeciality: GetMedicalsBySpeciality = new GetMedicalsBySpeciality(this.medicalRepository);
+
   createUser: CreateUser = new CreateUser(this.userRepository);
   getUsers: GetUsers = new GetUsers(this.userRepository);
 
   createAnimal: CreateAnimal = new CreateAnimal(this.userRepository);
+  getAllAnimalsByUser: GetAllAnimalsByUser = new GetAllAnimalsByUser(this.userRepository);
 }

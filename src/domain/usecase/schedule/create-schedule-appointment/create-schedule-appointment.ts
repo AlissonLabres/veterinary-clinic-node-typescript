@@ -11,12 +11,11 @@ import ScheduleAppointmentInput from "./schedule-appointment-input";
 import ScheduleAppointmentOutput from "./schedule-appointment-output";
 
 export default class CreateScheduleAppointment {
-
   constructor(
     private readonly scheduleRepository: ScheduleRepository,
     private readonly medicalRepository: MedicalRepository,
     private readonly userRepository: UserRepository
-  ) { }
+  ) {}
 
   async execute(input: ScheduleAppointmentInput): Promise<ScheduleAppointmentOutput> {
     const user: User = await this.userRepository.getUserAndAnimalsById(input.user_id, input.animal_id);
@@ -38,7 +37,7 @@ export default class CreateScheduleAppointment {
     return {
       schedule_id: id_schedule,
       schedule_status: schedule.schedule_status,
-      type_service: schedule.type_service.value
+      type_service: schedule.type_service.value,
     };
   }
 }

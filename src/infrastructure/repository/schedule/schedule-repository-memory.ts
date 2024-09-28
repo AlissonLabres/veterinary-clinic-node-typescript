@@ -5,9 +5,8 @@ import Bullet from "../../../domain/entity/bullet";
 import MemoryConnection from "../database/memory-connection";
 
 export default class ScheduleRepositoryMemory implements ScheduleRepository {
+  constructor(private readonly memoryConnection: MemoryConnection) {}
 
-  constructor(private readonly memoryConnection: MemoryConnection) { }
-  
   createSchedule(schedule: Schedule): Promise<number> {
     schedule.schedule_id = crypto.randomInt(30);
     this.memoryConnection.schedules.push({
@@ -26,14 +25,14 @@ export default class ScheduleRepositoryMemory implements ScheduleRepository {
       }
 
       return bullet;
-    })
+    });
 
     return Promise.resolve(schedule.schedule_id);
   }
 
   async getSchedule(schedule_id: number): Promise<Schedule> {
     try {
-      const scheduleData = this.memoryConnection.schedules.find(schedule => schedule.schedule_id === schedule_id);
+      const scheduleData = this.memoryConnection.schedules.find((schedule) => schedule.schedule_id === schedule_id);
       const schedule = Schedule.restore(scheduleData);
 
       return Promise.resolve(schedule);
@@ -43,13 +42,13 @@ export default class ScheduleRepositoryMemory implements ScheduleRepository {
   }
 
   async cancelSchedule(schedule: Schedule): Promise<void> {
-    this.memoryConnection.schedules = this.memoryConnection.schedules.map(scheduleData => {
+    this.memoryConnection.schedules = this.memoryConnection.schedules.map((scheduleData) => {
       if (scheduleData.schedule_id === schedule.schedule_id) {
         scheduleData.schedule_status = schedule.schedule_status;
         scheduleData.bullet_id = undefined;
       }
 
-      return scheduleData
+      return scheduleData;
     });
 
     this.memoryConnection.bullets = this.memoryConnection.bullets.map((bullet) => {
@@ -58,12 +57,12 @@ export default class ScheduleRepositoryMemory implements ScheduleRepository {
       }
 
       return bullet;
-    })
+    });
   }
 
   getBulletById(id: number): Promise<Bullet> {
     try {
-      const bulletData = this.memoryConnection.bullets.find(bullet => bullet.bullet_id === id);
+      const bulletData = this.memoryConnection.bullets.find((bullet) => bullet.bullet_id === id);
       return Promise.resolve(Bullet.restore(bulletData));
     } catch (error) {
       return Promise.reject(error);
@@ -72,7 +71,9 @@ export default class ScheduleRepositoryMemory implements ScheduleRepository {
 
   getBulletByCode(code: string): Promise<Bullet> {
     try {
-      const bulletData = this.memoryConnection.bullets.find(bullet => bullet.bullet_code === code && !bullet.schedule_id);
+      const bulletData = this.memoryConnection.bullets.find(
+        (bullet) => bullet.bullet_code === code && !bullet.schedule_id
+      );
       return Promise.resolve(Bullet.restore(bulletData));
     } catch (error) {
       return Promise.reject(error);
@@ -82,11 +83,13 @@ export default class ScheduleRepositoryMemory implements ScheduleRepository {
   getNearestBullet(urgency_date: string): Promise<Bullet> {
     try {
       const bulletsSort = this.memoryConnection.bullets
-        .filter(bullet => !bullet.schedule_id)
+        .filter((bullet) => !bullet.schedule_id)
         .sort((bulletA, bulletB) => new Date(bulletA.bullet_code).getTime() - new Date(bulletB.bullet_code).getTime());
 
-      const bulletData = bulletsSort.find((bullet) => new Date(urgency_date).getTime() < new Date(bullet.bullet_code).getTime())
-  
+      const bulletData = bulletsSort.find(
+        (bullet) => new Date(urgency_date).getTime() < new Date(bullet.bullet_code).getTime()
+      );
+
       return Promise.resolve(Bullet.restore(bulletData));
     } catch (error) {
       return Promise.reject(error);
@@ -94,7 +97,7 @@ export default class ScheduleRepositoryMemory implements ScheduleRepository {
   }
 
   getBullets(): Promise<Bullet[]> {
-    const bulletsData = this.memoryConnection.bullets.filter(bullet => !bullet.schedule_id);
+    const bulletsData = this.memoryConnection.bullets.filter((bullet) => !bullet.schedule_id);
     const bullets: Bullet[] = [];
 
     for (const bulletData of bulletsData) {
@@ -106,7 +109,7 @@ export default class ScheduleRepositoryMemory implements ScheduleRepository {
 
   getAllSchedules(user_id: number): Promise<Schedule[]> {
     try {
-      const schedulesData = this.memoryConnection.schedules.filter(schedule => schedule.user_id === user_id);
+      const schedulesData = this.memoryConnection.schedules.filter((schedule) => schedule.user_id === user_id);
       const schedules: Schedule[] = [];
 
       for (const scheduleData of schedulesData) {
@@ -118,5 +121,4 @@ export default class ScheduleRepositoryMemory implements ScheduleRepository {
       return Promise.reject(error);
     }
   }
-
 }
