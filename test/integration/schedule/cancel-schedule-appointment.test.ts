@@ -1,29 +1,35 @@
-import Schedule from "../../../src/domain/entity/schedule";
 import ScheduleException from "../../../src/domain/exception/schedule-exception";
 import CancelScheduleAppointment from "../../../src/domain/usecase/schedule/cancel-schedule-appointment/cancel-schedule-appoitment";
 import MemoryConnection from "../../../src/infrastructure/repository/database/memory-connection";
 
 import ScheduleRepositoryMemory from "../../../src/infrastructure/repository/schedule/schedule-repository-memory";
 
-test('Should cancel usecase schedule appointment', async () => {
-  const repository = new ScheduleRepositoryMemory(new MemoryConnection());
-  const useCase = new CancelScheduleAppointment(repository);
+import { SCHEDULE_APPOINTMENT } from "../../mock/schedule.mock";
 
-  const schedule = Schedule.create(1, 1, 1, 1);
-  const schedule_id = await repository.createSchedule(schedule);
+describe("Schedule - cancel schedule appointment", () => {
+  let memoryConnection: MemoryConnection;
+  let repository: ScheduleRepositoryMemory;
+  let usecase: CancelScheduleAppointment;
 
-  await useCase.execute(schedule_id);
+  beforeEach(() => {
+    memoryConnection = new MemoryConnection();
+    repository = new ScheduleRepositoryMemory(memoryConnection);
+    usecase = new CancelScheduleAppointment(repository);
+  });
 
-  const scheduleData = await repository.getSchedule(schedule_id);
-  expect(scheduleData.schedule_status).toBe('CANCELED');
-  expect(scheduleData.bullet_id).toBeUndefined();
-})
+  test("Should cancel usecase schedule appointment", async () => {
+    memoryConnection.schedules.push(SCHEDULE_APPOINTMENT());
 
-test('Should receive schedule not found when cancel schedule appointment not created', async () => {
-  const repository = new ScheduleRepositoryMemory(new MemoryConnection());
-  const useCase = new CancelScheduleAppointment(repository);
+    await usecase.execute(1);
+    const schedule = await repository.getSchedule(1);
 
-  const exception = { name: 'SCHEDULE_EXCEPTION', message: 'Schedule not found', status: 404 };
-  await expect(() => useCase.execute(500)).rejects.toEqual(exception);
-  await expect(() => useCase.execute(500)).rejects.toBeInstanceOf(ScheduleException);
-})
+    expect(schedule.schedule_status).toBe("CANCELED");
+    expect(schedule.bullet_id).toBeUndefined();
+  });
+
+  test("Should receive schedule not found when cancel schedule appointment not created", async () => {
+    const exception = { name: "SCHEDULE_EXCEPTION", message: "Schedule not found", status: 404 };
+    await expect(() => usecase.execute(500)).rejects.toEqual(exception);
+    await expect(() => usecase.execute(500)).rejects.toBeInstanceOf(ScheduleException);
+  });
+});

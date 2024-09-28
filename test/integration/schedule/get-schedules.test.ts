@@ -1,43 +1,37 @@
-import Schedule from "../../../src/domain/entity/schedule";
-import User from "../../../src/domain/entity/user";
 import AllScheduleOutput from "../../../src/domain/usecase/schedule/get-all-schedules/all-schedule-output";
 import GetAllSchedules from "../../../src/domain/usecase/schedule/get-all-schedules/get-all-schedules";
 import MemoryConnection from "../../../src/infrastructure/repository/database/memory-connection";
-import ScheduleRepositoryMemory from "../../../src/infrastructure/repository/schedule/schedule-repository-memory"
-import UserRepositoryMemory from "../../../src/infrastructure/repository/user/user-repository-memory";
+import ScheduleRepositoryMemory from "../../../src/infrastructure/repository/schedule/schedule-repository-memory";
+import { ANIMAL, USER } from "../../mock";
+import { BULLET } from "../../mock/bullet.mock";
+import { SCHEDULE_APPOINTMENT } from "../../mock/schedule.mock";
 
-test('Should empty list when execute usecase GetAllSchedules', async () => {
-  const repository = new ScheduleRepositoryMemory(new MemoryConnection());
-  const useCase = new GetAllSchedules(repository);
-  const output: AllScheduleOutput[] = await useCase.execute(1);
+describe("Schedule - Get all schedules by user", () => {
+  let memoryConnection: MemoryConnection;
+  let usecase: GetAllSchedules;
 
-  expect(output.length).toEqual(0);
-})
+  beforeEach(() => {
+    memoryConnection = new MemoryConnection();
+    const repository = new ScheduleRepositoryMemory(memoryConnection);
+    usecase = new GetAllSchedules(repository);
+  });
 
-test('Should create schedule and list all', async () => {
-  const memoryConnection = new MemoryConnection();
-  const userRepository = new UserRepositoryMemory(memoryConnection);
-  const { user_id } = await userRepository.create(
-    User.create({
-      user_name: 'Name Testing',
-      user_email: 'email@testing.com.br',
-      user_phone: '(41) 98888-2222'
-    })
-  );
+  test("Should empty list when execute usecase GetAllSchedules", async () => {
+    const output: AllScheduleOutput[] = await usecase.execute(1);
+    expect(output.length).toEqual(0);
+  });
 
-  const scheduleRepository = new ScheduleRepositoryMemory(memoryConnection);
-  await scheduleRepository.createSchedule(Schedule.create(
-    user_id!,
-    1,
-    1,
-    1
-  ));
+  test("Should receive one item in list when execute usecase GetAllSchedules", async () => {
+    memoryConnection.users.push(USER("1"));
+    memoryConnection.animals.push(ANIMAL(1));
+    memoryConnection.bullets.push({ ...BULLET(), schedule_id: 1 });
+    memoryConnection.schedules.push(SCHEDULE_APPOINTMENT());
 
-  const useCase = new GetAllSchedules(scheduleRepository);
-  const [output]: AllScheduleOutput[] = await useCase.execute(user_id!);
+    const [output]: AllScheduleOutput[] = await usecase.execute(1);
 
-  expect(output.schedule_id).toBeDefined();
-  expect(output.schedule_status).toEqual('SCHEDULED');
-  expect(output.type_service).toEqual('APPOINTMENT');
-  expect(output.bullet_code).toEqual('2023-08-08T16:00');
-})
+    expect(output.schedule_id).toBeDefined();
+    expect(output.schedule_status).toEqual("SCHEDULED");
+    expect(output.type_service).toEqual("APPOINTMENT");
+    expect(output.bullet_code).toEqual("2023-08-08T16:00");
+  });
+});
