@@ -16,7 +16,6 @@ interface BulletMemory {
 
 interface MedicalMemory {
   medical_name: string;
-  medical_specialities: string;
   medical_phone: string;
   medical_email: string;
   medical_id: number;
@@ -40,12 +39,24 @@ interface AnimalsMemory {
   user_id: number;
 }
 
+interface SpecialityMemory {
+  speciality_id: number;
+  speciality_name: string;
+}
+
+interface MedicalSpecialityMemory {
+  medical_id: number;
+  speciality_id: number;
+}
+
 export default class MemoryConnection {
   bullets: BulletMemory[] = [];
   schedules: ScheduleMemory[] = [];
   medicals: MedicalMemory[] = [];
   users: UsersMemory[] = [];
   animals: AnimalsMemory[] = [];
+  specialities: SpecialityMemory[] = [];
+  medicalSpecialities: MedicalSpecialityMemory[] = [];
 
   constructor() {}
 }

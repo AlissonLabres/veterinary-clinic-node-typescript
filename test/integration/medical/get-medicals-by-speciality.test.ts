@@ -15,14 +15,18 @@ describe("Medical - get all medicals by speciality", () => {
   });
 
   test("Should empty list when execute usecase GetMedicalsBySpeciality", async () => {
-    const output: MedicalOutput[] = await usecase.execute("CASTRATE");
+    memoryConnection.specialities.push({ speciality_id: 1, speciality_name: "URGENT" });
+
+    const output: MedicalOutput[] = await usecase.execute(1);
     expect(output.length).toEqual(0);
   });
 
   test("Should receive one item in list when execute usecase GetMedicalsBySpeciality", async () => {
+    memoryConnection.medicalSpecialities.push({ speciality_id: 1, medical_id: 1 });
+    memoryConnection.specialities.push({ speciality_id: 1, speciality_name: "URGENT" });
     memoryConnection.medicals.push(MEDICAL());
 
-    const output: MedicalOutput[] = await usecase.execute("VACCINATION");
+    const output: MedicalOutput[] = await usecase.execute(1);
     expect(output.length).toEqual(1);
   });
 });

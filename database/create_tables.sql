@@ -1,4 +1,16 @@
-DROP TABLE IF EXISTS schedule, bullet, medical, users, animal CASCADE;
+DROP TABLE IF EXISTS
+schedule,
+medical_speciality,
+bullet,
+medical,
+users,
+animal,
+speciality CASCADE;
+
+CREATE TABLE IF NOT EXISTS speciality (
+    speciality_id SERIAL primary key,
+    speciality_name varchar(255) not null
+);
 
 CREATE TABLE IF NOT EXISTS bullet (
     bullet_id SERIAL primary key,
@@ -9,7 +21,6 @@ CREATE TABLE IF NOT EXISTS bullet (
 CREATE TABLE IF NOT EXISTS medical (
     medical_id SERIAL primary key,
     medical_name varchar(255) not null,
-    medical_specialities varchar(255) not null,
     medical_phone varchar(255) not null,
     medical_email varchar(255) not null
 );
@@ -41,32 +52,26 @@ CREATE TABLE IF NOT EXISTS animal (
     user_id integer
 );
 
-ALTER TABLE bullet
-ADD CONSTRAINT fk_schedule
-FOREIGN KEY(schedule_id)
-REFERENCES schedule(schedule_id);
+CREATE TABLE IF NOT EXISTS medical_speciality (
+    medical_id integer NOT NULL REFERENCES medical(medical_id),
+    speciality_id integer NOT NULL REFERENCES speciality(speciality_id),
+    PRIMARY KEY (medical_id, speciality_id)
+);
 
-ALTER TABLE schedule 
-ADD CONSTRAINT fk_bullet 
-FOREIGN KEY(bullet_id) 
-REFERENCES bullet(bullet_id);
+ALTER TABLE bullet ADD
+CONSTRAINT fk_schedule FOREIGN KEY(schedule_id) REFERENCES schedule(schedule_id);
 
-ALTER TABLE schedule 
-ADD CONSTRAINT fk_medical 
-FOREIGN KEY(medical_id) 
-REFERENCES medical(medical_id);
+ALTER TABLE schedule ADD
+CONSTRAINT fk_bullet FOREIGN KEY(bullet_id) REFERENCES bullet(bullet_id);
 
-ALTER TABLE schedule 
-ADD CONSTRAINT fk_users 
-FOREIGN KEY(user_id) 
-REFERENCES users(user_id);
+ALTER TABLE schedule ADD
+CONSTRAINT fk_medical FOREIGN KEY(medical_id) REFERENCES medical(medical_id);
 
-ALTER TABLE schedule
-ADD CONSTRAINT fk_animal
-FOREIGN KEY(animal_id)
-REFERENCES animal(animal_id);
+ALTER TABLE schedule ADD
+CONSTRAINT fk_users FOREIGN KEY(user_id) REFERENCES users(user_id);
 
-ALTER TABLE animal
-ADD CONSTRAINT fk_users
-FOREIGN KEY(user_id)
-REFERENCES users(user_id);
+ALTER TABLE schedule ADD
+CONSTRAINT fk_animal FOREIGN KEY(animal_id) REFERENCES animal(animal_id);
+
+ALTER TABLE animal ADD
+CONSTRAINT fk_users FOREIGN KEY(user_id) REFERENCES users(user_id);

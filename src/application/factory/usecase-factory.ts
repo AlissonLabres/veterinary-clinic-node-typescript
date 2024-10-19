@@ -11,6 +11,7 @@ import GetMedicalsBySpeciality from "../../domain/usecase/medical/get-medical-by
 import GetUsers from "../../domain/usecase/user/get-all-users/get-users";
 import CreateAnimal from "../../domain/usecase/animal/create-animal/create-animal";
 import GetAllAnimalsByUser from "../../domain/usecase/animal/get-all-animals-by-user/get-all-animals-by-user";
+import GetSpecialities from "../../domain/usecase/medical/get-specialities/get-specialities";
 
 export default class UsecaseFactory {
   constructor(
@@ -33,6 +34,7 @@ export default class UsecaseFactory {
   getBullets: GetBullets = new GetBullets(this.scheduleRepository);
   getAllSchedules: GetAllSchedules = new GetAllSchedules(this.scheduleRepository);
 
+  getSpecialities: GetSpecialities = new GetSpecialities(this.medicalRepository);
   getMedicalsBySpeciality: GetMedicalsBySpeciality = new GetMedicalsBySpeciality(this.medicalRepository);
 
   createUser: CreateUser = new CreateUser(this.userRepository);

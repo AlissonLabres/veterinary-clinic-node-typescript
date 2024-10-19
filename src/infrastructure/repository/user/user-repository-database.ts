@@ -120,7 +120,7 @@ export default class UserRepositoryDatabase implements UserRepository {
       `
       SELECT animals.*, users.user_id FROM animal as animals
       LEFT JOIN users ON users.user_id = animals.animal_id
-      WHERE users.user_id = $1
+      WHERE animals.user_id = $1
     `,
       [user_id]
     );

@@ -1,0 +1,1 @@
+# Add commit message linting to commit-msg hooknpm run lint && npm run test
