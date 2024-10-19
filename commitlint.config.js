@@ -1,29 +1,12 @@
 const Configuration = {
+  extends: ["@commitlint/config-conventional", "@commitlint/parse"],
   parserPreset: {
     parserOpts: {
       headerPattern: /\[(\w*)\] \- (\w*)/,
       headerCorrespondence: ["type", "subject"],
     },
   },
-  plugins: [
-    {
-      rules: {
-        "header-match-team-pattern": (parsed) => {
-          const { type, subject } = parsed;
-          console.log("\n\n\n", "TYPE - ", type);
-          console.log("SUBJECT - ", subject, "\n\n\n");
-
-          if (type !== null && subject !== null) {
-            return [false, "header must be in format ':gitmoji:? [scope] subject'"];
-          }
-
-          return [true, ""];
-        },
-      },
-    },
-  ],
   rules: {
-    "header-match-team-pattern": [2, "always"],
     "type-case": [2, "always", ["upper-case"]],
     "type-enum": [2, "always", ["CHORE", "CI", "FEAT", "FIX", "REFACTOR", "REVERT", "STYLE", "TEST"]],
     "scope-empty": [2, "always", []],
